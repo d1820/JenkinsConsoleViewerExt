@@ -1,5 +1,5 @@
 {
-  "name": "JenkinsConsoleViewerExt",
+  "name": "JenkinsPlusExt",
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "Extension to be able to view the console output from the current build list job page",
@@ -44,7 +44,7 @@
       "19": "images/Jenkins_logo-20.png",
       "38": "images/Jenkins_logo-38.png"
     },
-    "default_title": "Jenkins Console Viewer",
+    "default_title": "Jenkins Plus",
     "default_popup": "popup.html"
   }
 }
