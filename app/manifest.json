@@ -15,12 +15,11 @@
     ]
   },
   "permissions": [
-    "tabs",
+    "activeTab",
     "http://*/*",
     "https://*/*",
-    "background",
-    "contentSettings",
-    "webNavigation"
+    "storage",
+    "clipboardWrite"
   ],
   "options_ui": {
     "page": "options.html",
@@ -33,6 +32,8 @@
         "https://*/*"
       ],
       "js": [
+        "scripts/jquery.js",
+        "scripts/jquery.ui.resizable.min.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",

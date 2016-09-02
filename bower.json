@@ -1,7 +1,7 @@
 {
-  "name": "jenkinsconsoleviewerext",
+  "name": "jenkinsplusext",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",

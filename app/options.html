@@ -1,25 +1,41 @@
 <!doctype html>
 <html>
-  <head>
-    <!-- build:css styles/options-vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css styles/main.css -->
-    <link href="styles/main.css" rel="stylesheet">
-    <!-- endbuild -->
-  </head>
-  <body>
-    <h1>'Allo, 'Allo!</h1>
-    Test settings here
 
-    <!-- build:js scripts/options-vendor.js -->
-    <!-- bower:js -->
-    <!-- endbower -->
-    <!-- endbuild -->
+<head>
+  <!-- build:css styles/options-vendor.css -->
+  <!-- bower:css -->
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css styles/main.css -->
+  <link href="styles/main.css" rel="stylesheet">
+  <!-- endbuild -->
+</head>
 
-    <!-- build:js scripts/options.js -->
-    <script src="scripts/options.js"></script>
-    <!-- endbuild -->
-  </body>
+<body>
+  Favorite color:
+  <select id="color">
+   <option value="red">red</option>
+   <option value="green">green</option>
+   <option value="blue">blue</option>
+   <option value="yellow">yellow</option>
+  </select>
+
+  <label>
+    <input type="checkbox" id="like">
+    I like colors.
+  </label>
+
+  <div id="status"></div>
+  <button id="save">Save</button>
+
+  <!-- build:js scripts/options-vendor.js -->
+  <!-- bower:js -->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:js scripts/options.js -->
+  <script src="scripts/options.js"></script>
+  <!-- endbuild -->
+</body>
+
 </html>

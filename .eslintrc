@@ -1,0 +1,164 @@
+{
+  "ecmaFeatures": {
+    "modules": true,
+    "jsx": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jasmine": true,
+    "jquery": true
+  },
+  "globals": {
+      "chrome": true
+    },
+  "extends": [
+        "eslint:recommended"
+    ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "pragma": "React"
+    }
+  },
+  "rules": {
+    "strict": [
+      2,
+      "function"
+    ],
+   
+    "no-redeclare": [
+      2,
+      {
+        "builtinGlobals": true
+      }
+    ],
+    "no-use-before-define": [
+      2,
+      "nofunc"
+    ],
+    "comma-style": [
+      2,
+      "last"
+    ],
+    "no-multiple-empty-lines": [
+      2,
+      {
+        "max": 3,
+        "maxEOF": 5
+      }
+    ],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "arrow-body-style": [
+      "error",
+      "always"
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never"
+      }
+    ],
+    "jsx-quotes": [
+      2,
+      "prefer-double"
+    ],
+    "keyword-spacing": [
+      2,
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "space-before-blocks": 2,
+    "no-useless-constructor": 2,
+    "comma-dangle": 2,
+    "no-unreachable": 2,
+    "valid-typeof": 2,
+    "curly": 2,
+    "no-eval": 2,
+    "no-implied-eval": 2,
+    "no-undefined": 2,
+    "no-trailing-spaces": 2,
+    "no-var": 2,
+    "prefer-const": 2,
+    "no-unexpected-multiline": 2,
+    "no-alert": 2,
+    "no-multi-spaces": 2,
+    //warn
+     "eqeqeq": [ //this should be warn for now incase we have string to int or string to date compares going on
+      1,
+      "smart"
+    ],
+    "no-warning-comments": [
+      1,
+      {
+        "terms": [
+          "todo",
+          "fixme",
+          "fix"
+        ],
+        "location": "start"
+      }
+    ],
+    "no-shadow": [
+      1,
+      {
+        "builtinGlobals": false,
+        "hoist": "functions",
+        "allow": []
+      }
+    ],
+    "no-mixed-spaces-and-tabs": [
+      1,
+      "smart-tabs"
+    ],
+    "quote-props": [
+      1,
+      "consistent-as-needed",
+      {
+        "keywords": true
+      }
+    ],
+    "no-loop-func": 1,
+    "camelcase": 1,
+    "no-spaced-func": 1,
+    "block-scoped-var": 1,
+    "default-case": 1,
+    "no-fallthrough": 1,
+    "no-floating-decimal": 1,
+    "vars-on-top": 1,
+    "no-nested-ternary": 1,
+    // disable
+    "init-declarations": 0,
+    "no-console": 0,
+    "no-inline-comments": 0,
+    "no-underscore-dangle": 0,
+    "linebreak-style": 0
+  }
+}
