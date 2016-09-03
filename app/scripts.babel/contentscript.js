@@ -82,18 +82,35 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
   const saveMenuItem = jQuery("<i class='jp-menu-icon jp-icon-save' title='Save output' />");
   saveMenuItem.click(function () {
     const iframe = jQuery("iframe[data-tab='" + newTabId + "']");
-    chrome.extension.sendMessage({
-      action: "copyClipBoard",
-      data: iframe.prop("src")
-    });
+    try {
+      const body = iframe.contents().find("body");
+      //TODO: filter down to just output area in jenkins page.. so dont get everything else
+      chrome.extension.sendMessage({
+        action: "saveHtml",
+        data: body.text()
+      });
+    } catch (e) {
+      toastr.error("Unable to save console output. Error: " + e.message);
+    }
+
   });
   const copyMenuItem = jQuery("<i class='jp-menu-icon jp-icon-copy' title='Copy to clipboard' />");
   copyMenuItem.click(function () {
     const iframe = jQuery("iframe[data-tab='" + newTabId + "']");
-    chrome.extension.sendMessage({
-      action: "saveHtml",
-      data: iframe.prop("src")
-    });
+    try {
+      const body = iframe.contents().find("body");
+      chrome.extension.sendMessage({
+        action: "copyClipBoard",
+        data: body.text()
+      }, function (response) {
+        if (response) {
+          toastr.info(response.status);
+        }
+      });
+    } catch (e) {
+      toastr.error("Unable to copy console output to clipboard. Error: " + e.message);
+    }
+
   });
   const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" frameborder="0" seamless src="${tabUrl}"></iframe>`);
 

@@ -4,7 +4,16 @@ chrome.runtime.onInstalled.addListener(details => {
 });
 
 const methods = {
-  copyClipBoard: () => { console.log("copy called"); },
+  copyClipBoard: (data, sendResponse) => {
+    const input = document.createElement("textarea");
+    document.body.appendChild(input);
+    input.value = data;
+    input.focus();
+    input.select();
+    document.execCommand("Copy");
+    input.remove();
+    sendResponse({ status: "copied to clipboard" });
+  },
   saveHtml: () => { console.log("save called"); },
   renderMock: (sendResponse) => {
     chrome.tabs.query({ active: true }, function (tabs) {
@@ -37,7 +46,11 @@ const methods = {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (methods.hasOwnProperty(request.action)) {
-    methods[request.action](sendResponse);
+    if (request.data) {
+      methods[request.action](request.data, sendResponse);
+    } else {
+      methods[request.action](sendResponse);
+    }
   } else {
     sendResponse({ status: "failure", errorId: "failure:unknownRrequestAction", error: "Not a supported request action for Jenkins Plus. Action: " + request.action });
   }
