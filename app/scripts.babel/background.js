@@ -1,9 +1,14 @@
+
 chrome.runtime.onInstalled.addListener(details => {
   console.log("previousVersion", details);
   //get info from local storage
 });
 
 const methods = {
+  openInNewTab: (data, sendResponse) => {
+    chrome.tabs.create({ url: data });
+    sendResponse({ status: "success" });
+  },
   copyClipBoard: (data, sendResponse) => {
     const input = document.createElement("textarea");
     document.body.appendChild(input);
@@ -12,9 +17,16 @@ const methods = {
     input.select();
     document.execCommand("Copy");
     input.remove();
-    sendResponse({ status: "copied to clipboard" });
+    sendResponse({ status: "Copied to clipboard" });
   },
-  saveHtml: () => { console.log("save called"); },
+  saveHtml: (data, sendResponse) => {
+    const doc = new jsPDF();
+    doc.fromHTML(data, 15, 15, {
+      "width": 170
+    });
+    doc.save(data.fileName + ".pdf");
+    sendResponse({ status: "Saved as html" });
+  },
   renderMock: (sendResponse) => {
     chrome.tabs.query({ active: true }, function (tabs) {
       const activeTab = tabs[0];

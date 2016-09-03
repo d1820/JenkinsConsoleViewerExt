@@ -68,8 +68,13 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
   const closeImage = jQuery(`<i title="Close Tab" data-tab="${newTabId}" class="jp-icon-close-tab" />`);
   closeImage.click(function () {
     const tabId = jQuery(this).attr("data-tab");
+    const tabsOpen = consoleContainer.find(".jp-tabs li");
+    if (tabsOpen.length > 0 && jQuery(this).parent().hasClass("jp-current")) {
+      $(tabsOpen[0]).click();
+    }
     jQuery(this).parent().remove();
     jQuery("#outer-" + tabId).remove();
+
     _showNoTabs(consoleContainer);
   });
   const tab = jQuery(`<li class="jp-tab-link jp-current" data-tab="${newTabId}"><span>${tabName}<span></li>`);
@@ -87,7 +92,10 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
       //TODO: filter down to just output area in jenkins page.. so dont get everything else
       chrome.extension.sendMessage({
         action: "saveHtml",
-        data: body.text()
+        data: {
+          html: body.html(),
+          fileName: tabName
+        }
       });
     } catch (e) {
       toastr.error("Unable to save console output. Error: " + e.message);
@@ -110,12 +118,24 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
     } catch (e) {
       toastr.error("Unable to copy console output to clipboard. Error: " + e.message);
     }
-
   });
+  const openMenuItem = jQuery("<i class='jp-menu-icon jp-icon-open' title='Open in new tab' />");
+  openMenuItem.click(function () {
+    try {
+      chrome.extension.sendMessage({
+        action: "openInNewTab",
+        data: tabUrl
+      });
+    } catch (e) {
+      toastr.error("Unable to open in new tab. Error: " + e.message);
+    }
+  });
+
   const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" frameborder="0" seamless src="${tabUrl}"></iframe>`);
 
   menuItemContainer.append(saveMenuItem);
   menuItemContainer.append(copyMenuItem);
+  menuItemContainer.append(openMenuItem);
   tabContentInner.append(menuItemContainer);
   tabContentInner.append(iFrameHtml);
   tabContent.append(tabContentInner);

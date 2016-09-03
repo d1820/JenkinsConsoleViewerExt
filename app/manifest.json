@@ -11,6 +11,7 @@
   "background": {
     "scripts": [
       "scripts/jquery.min.js",
+      "scripts/jspdf.min.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]
