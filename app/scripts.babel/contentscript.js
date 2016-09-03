@@ -129,7 +129,7 @@ function _checkIfAlreadyOpen(consoleContainer, tabText) {
   const tabs = consoleContainer.find(".jp-tabs li");
   for (let i = 0; i < tabs.length; i++) {
     const obj = jQuery(tabs[i]);
-    if (obj.text() == tabText) {
+    if (obj.text() === tabText) {
       return true;
     }
   }
@@ -138,13 +138,12 @@ function _checkIfAlreadyOpen(consoleContainer, tabText) {
 let _consoleIconsRendered = false;
 
 function _injectConsoleIcons() {
-  if (_consoleIconsRendered)
-  {
-    //return;
+  if (_consoleIconsRendered) {
+    return;
   }
-  jQuery(".build-row-cell").each(() => {
+  jQuery(".build-row-cell").each(function () {
     const htmlObj = jQuery("<div class='jp-console-icon'><i title='Console'/></div>");
-    
+
     htmlObj.click(function () {
       const link = jQuery(this).closest(".build-row-cell").find(".build-name .build-link");
       if (link.length > 0) {
@@ -163,9 +162,10 @@ function _injectConsoleIcons() {
         alert("Build not started...");
       }
     });
-    
+
     //TODO: check for icon already there
-    jQuery(this).find(".build-controls .build-badge").append(htmlObj);
+    var container = jQuery(this).find(".build-controls .build-badge");
+    container.append(htmlObj);
     _consoleIconsRendered = true;
   });
 }

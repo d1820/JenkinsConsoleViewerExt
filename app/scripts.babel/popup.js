@@ -5,6 +5,7 @@ document.getElementById("consoleViewer").addEventListener("click", function () {
     function (response) {
       //TODO: write error to popup
       console.log(response);
+      window.close();
     });
 });
 
