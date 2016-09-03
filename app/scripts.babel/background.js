@@ -1,34 +1,53 @@
-'use strict';
-
 chrome.runtime.onInstalled.addListener(details => {
-    console.log('previousVersion', details);
+  console.log("previousVersion", details);
+  //get info from local storage
 });
 
-var vsoShowing = false;
-chrome.browserAction.onClicked.addListener(tab => {
+const methods = {
+  copyClipBoard: () => { console.log("copy called"); },
+  saveHtml: () => { console.log("save called"); },
+  renderMock: () => {
+    chrome.tabs.query({ active: true }, function (tabs) {
+      const activeTab = tabs[0];
+      getMockHtml().then((html) => {
+        chrome.tabs.sendMessage(activeTab.id, {
+          action: "rendermock",
+          html: html
+        }, (response) => {
+          console.log(response);
+        });
+      });
 
-    injectedMethod(tab, 'showVsoExtenstion', function (response) {
-        vsoShowing = true;
-        return true;
     });
-
-    var methods = {
-
-    };
-
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        console.log("in background onMessage");
-        if (methods.hasOwnProperty(request.method)) {
-            methods[request.method](request.data);
-        }
-
-        return true;
+  },
+  showConsoleViewer: () => {
+    chrome.tabs.query({ active: true }, function (tabs) {
+      const activeTab = tabs[0];
+      chrome.tabs.sendMessage(activeTab.id, {
+        action: "showconsoleviewer"
+      }, (response) => {
+        console.log(response);
+      });
     });
+  }
+};
 
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (methods.hasOwnProperty(request.action)) {
+    methods[request.action](request.data);
+  }
+  sendResponse({ data: "success:background" });
+  return true;
 });
 
-function injectedMethod(tab, method, callback) {
-    chrome.tabs.sendMessage(tab.id, { method: method }, callback);
+
+chrome.browserAction.setBadgeText({ text: "\Plus" });
+
+
+function getMockHtml() {
+  return jQuery.ajax(
+    {
+      url: chrome.extension.getURL("/mock.html"),
+      cache: false
+    });
 }
-
-chrome.browserAction.setBadgeText({ text: '\Plus' });

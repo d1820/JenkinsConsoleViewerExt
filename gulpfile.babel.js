@@ -5,6 +5,7 @@ import del from "del";
 import runSequence from "run-sequence";
 import less from "gulp-less";
 import sourcemaps from "gulp-sourcemaps";
+//import {stream as wiredep} from 'wiredep';
 
 const $ = gulpLoadPlugins();
 
@@ -14,11 +15,11 @@ gulp.task("extras", () => {
     "app/_locales/**",
     "!app/scripts.babel",
     "!app/*.json",
-    "!app/*.html"    
+    "!app/*.html"
   ], {
-    base: "app",
-    dot: true
-  }).pipe(gulp.dest("dist"));
+      base: "app",
+      dot: true
+    }).pipe(gulp.dest("dist"));
 });
 
 function lint(files, options) {
@@ -35,6 +36,14 @@ gulp.task("lint", lint("app/scripts.babel/**/*.js", {
   }
 }));
 
+// gulp.task('wiredep', () => {
+//   gulp.src('app/*.html')
+//     .pipe(wiredep({
+//       ignorePath: /^(\.\.\/)*\.\./
+//     }))
+//     .pipe(gulp.dest('app'));
+// });
+
 gulp.task("images", () => {
   return gulp.src("app/images/**/*")
     .pipe($.if($.if.isFile, $.cache($.imagemin({
@@ -42,12 +51,12 @@ gulp.task("images", () => {
       interlaced: true,
       // don"t remove IDs from SVGs, they are often used
       // as hooks for embedding and styling
-      svgoPlugins: [ { cleanupIDs: false } ]
+      svgoPlugins: [{ cleanupIDs: false }]
     }))
-    .on("error", function (err) {
-      console.log(err);
-      this.end();
-    })))
+      .on("error", function (err) {
+        console.log(err);
+        this.end();
+      })))
     .pipe(gulp.dest("dist/images"));
 });
 
@@ -56,7 +65,7 @@ gulp.task("html", () => {
     .pipe($.useref({ searchPath: [".tmp", "app", "."] }))
     .pipe($.sourcemaps.init())
     .pipe($.if("*.js", $.uglify()))
-    .pipe($.if("*.css", $.cleanCss({ compatibility: "*"}  )))
+    .pipe($.if("*.css", $.cleanCss({ compatibility: "*" })))
     .pipe($.sourcemaps.write())
     .pipe($.if("*.html", $.htmlmin({ removeComments: true, collapseWhitespace: true })))
     .pipe(gulp.dest("dist"));
@@ -72,38 +81,44 @@ gulp.task("chromeManifest", () => {
           "scripts/chromereload.js"
         ]
       }
-  }))
-  .pipe($.if("*.css", $.cleanCss({compatibility: "*"})))
-  .pipe($.if("*.js", $.sourcemaps.init()))
-  .pipe($.if("*.js", $.uglify()))
-  .pipe($.if("*.js", $.sourcemaps.write(".")))
-  .pipe(gulp.dest("dist"));
+    }))
+    .pipe($.if("*.css", $.cleanCss({ compatibility: "*" })))
+    .pipe($.if("*.js", $.sourcemaps.init()))
+    .pipe($.if("*.js", $.uglify()))
+    .pipe($.if("*.js", $.sourcemaps.write(".")))
+    .pipe(gulp.dest("dist"));
 });
 
 gulp.task("babel", () => {
   return gulp.src("app/scripts.babel/**/*.js")
-      .pipe($.babel({
-        presets: ["es2015"]
-      }))
-      .pipe(gulp.dest("app/scripts"));
+    .pipe($.babel({
+      presets: ["es2015"]
+    }))
+    .pipe(gulp.dest("app/scripts"));
 });
 
 gulp.task("clean", del.bind(null, [".tmp", "dist"]));
 
-gulp.task("watch", ["lint", "babel", "html"], () => {
-  $.livereload.listen();
+gulp.task("watch", [
+  //"lint", 
+  "babel",
+  "html",
+  "less"], () => {
+    $.livereload.listen();
 
-  gulp.watch([
-    "app/*.html",
-    "app/scripts/**/*.js",
-    "app/images/**/*",
-    "app/styles/**/*",
-    "app/_locales/**/*.json"
-  ]).on("change", $.livereload.reload);
+    gulp.watch([
+      "app/*.html",
+      "app/scripts/**/*.js",
+      "app/images/**/*",
+      "app/styles/**/*",
+      "app/_locales/**/*.json"
+    ]).on("change", $.livereload.reload);
 
-  gulp.watch("app/scripts.babel/**/*.js", ["lint", "babel"]);
-  gulp.watch("app/less/**/*.less", ["less"]);
-});
+    gulp.watch("app/scripts.babel/**/*.js", [
+      //"lint",
+      "babel"]);
+    gulp.watch("app/less/**/*.less", ["less"]);
+  });
 
 gulp.task("size", () => {
   return gulp.src("dist/**/*").pipe($.size({ title: "build", gzip: true }));
@@ -111,28 +126,28 @@ gulp.task("size", () => {
 
 gulp.task("less", function () {
   gulp.src("app/less/**/*.less")
-  .pipe(sourcemaps.init())
-  .pipe(less())
-  .pipe(sourcemaps.write())
-  .pipe(gulp.dest("app/styles"));
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest("app/styles"));
 });
 
 gulp.task("package", function () {
   const manifest = require("./dist/manifest.json");
   return gulp.src("dist/**")
-      .pipe($.zip("JenkinsConsoleViewerExt-" + manifest.version + ".zip"))
-      .pipe(gulp.dest("package"));
+    .pipe($.zip("JenkinsConsoleViewerExt-" + manifest.version + ".zip"))
+    .pipe(gulp.dest("package"));
 });
 
 gulp.task("build", (cb) => {
   runSequence(
-    "lint",
+    //"lint",
     "babel",
     "chromeManifest",
     ["html",
-    "images",
-    "less",
-    "extras"],
+      "images",
+      "less",
+      "extras"],
     "size", cb);
 });
 

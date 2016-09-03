@@ -108,7 +108,7 @@
     "no-var": 2,
     "prefer-const": 2,
     "no-unexpected-multiline": 2,
-    "no-alert": 2,
+    "no-alert": 1,
     "no-multi-spaces": 2,
     //warn
      "eqeqeq": [ //this should be warn for now incase we have string to int or string to date compares going on

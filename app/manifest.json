@@ -2,7 +2,7 @@
   "name": "JenkinsPlusExt",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "Extension to be able to view the console output from the current build list job page",
+  "description": "Extension that add missing functionality to Jenkins",
   "icons": {
     "16": "images/Jenkins_logo-16.png",
     "128": "images/Jenkins_logo-128.png"
@@ -10,12 +10,20 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "scripts/jquery.min.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]
   },
+  "web_accessible_resources": [
+    "images/*",
+    "templates.html",
+    "mock.html",
+    "styles/jpconsole.css",
+    "styles/mock.css"
+  ],
   "permissions": [
-    "activeTab",
+    "tabs",
     "http://*/*",
     "https://*/*",
     "storage",
@@ -31,13 +39,13 @@
         "http://*/*",
         "https://*/*"
       ],
+      "css": [ "styles/jquery.ui.css", "styles/jpconsole.css", "styles/mock.css" ],
       "js": [
-        "scripts/jquery.js",
+        "scripts/jquery.min.js",
         "scripts/jquery.ui.resizable.min.js",
         "scripts/contentscript.js"
       ],
-      "run_at": "document_end",
-      "all_frames": false
+      "run_at": "document_end"
     }
   ],
   "browser_action": {
