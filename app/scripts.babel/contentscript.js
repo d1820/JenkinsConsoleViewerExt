@@ -1,28 +1,55 @@
+/* eslint no-undef: 0 */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   //console.log(sender.tab ?     "from a content script:" + sender.tab.url :    "from the extension");
   switch (request.action) {
     case "showconsoleviewer":
-      _injectConsoleIcons();
-      _renderConsole();
-      sendResponse({ data: "success:consoleIconsRendered" });
+      if (_hasJenkinsBuildLinks()) {
+        _injectConsoleIcons(_isDevelopment(request.extInfo));
+        _renderConsole().then(function () {
+          sendResponse({ status: "success" });
+        });
+        break;
+      }
+      const err = _createError("failure:notSuportedPage", "Not a supported page for the Jenkins Console Viewer");
+      toastr.warning(err.error);
+      sendResponse(err);
       break;
     case "rendermock":
-      jQuery("body").append(request.html);
-      sendResponse({ data: "success:mockHtmlRendered" });
+      const htmldoc = jQuery(request.html);
+      htmldoc.find(".build-name a").each(function () {
+        $(this).prop("href", request.activeUrl);
+      });
+      jQuery("body").append(htmldoc);
+      sendResponse({ status: "success" });
       break;
     default:
-      sendResponse({ data: "failure:Invalid Action:" + request.action });
+      sendResponse(_createError("failure:invalidAction", "Unknown action recieved in content script. Action: " + request.action));
       break;
   }
   return true;
 });
 
+function _createError(errorId, error) {
+  return {
+    status: "failure",
+    errorId: errorId,
+    error: error
+  };
+}
+
+function _isDevelopment(extInfo) {
+  return extInfo.installType === "development";
+}
+
+function _hasJenkinsBuildLinks() {
+  return jQuery(".build-row-cell .build-controls .build-badge").length > 0;
+}
 function _clearSelectedTabs() {
   jQuery("ul.jp-tabs li").removeClass("jp-current");
   jQuery(".jp-tab-content").removeClass("jp-current");
 }
 
-function showNoTabs(consoleContainer) {
+function _showNoTabs(consoleContainer) {
   const tabItems = consoleContainer.find(".jp-tabs li");
   jQuery(".jp-no-tabs").hide();
   if (tabItems.length === 0) {
@@ -38,21 +65,21 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
   //clear all selected tabs
   _clearSelectedTabs();
 
-  const closeImage = jQuery('<i title="Close Tab" data-tab="' + newTabId + '" class="jp-icon-close-tab" />');
+  const closeImage = jQuery(`<i title="Close Tab" data-tab="${newTabId}" class="jp-icon-close-tab" />`);
   closeImage.click(function () {
     const tabId = jQuery(this).attr("data-tab");
     jQuery(this).parent().remove();
     jQuery("#outer-" + tabId).remove();
-    showNoTabs(consoleContainer);
+    _showNoTabs(consoleContainer);
   });
-  const tab = jQuery('<li class="jp-tab-link jp-current" data-tab="' + newTabId + '"><span>' + tabName + '<span></li>');
+  const tab = jQuery(`<li class="jp-tab-link jp-current" data-tab="${newTabId}"><span>${tabName}<span></li>`);
   tab.append(closeImage);
   tabs.append(tab);
 
-  const tabContent = jQuery('<div class="jp-outer-content" id="outer-' + newTabId + '">');
-  const tabContentInner = jQuery('<div  class="jp-tab-content jp-current" id="' + newTabId + '">');
+  const tabContent = jQuery(`<div class="jp-outer-content" id="outer-${newTabId}">`);
+  const tabContentInner = jQuery(`<div  class="jp-tab-content jp-current" id="${newTabId}">`);
   const menuItemContainer = jQuery("<div></div>");
-  const saveMenuItem = jQuery('<i class="jp-menu-icon jp-icon-save" title="Save output" />');
+  const saveMenuItem = jQuery("<i class='jp-menu-icon jp-icon-save' title='Save output' />");
   saveMenuItem.click(function () {
     const iframe = jQuery("iframe[data-tab='" + newTabId + "']");
     chrome.extension.sendMessage({
@@ -60,7 +87,7 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
       data: iframe.prop("src")
     });
   });
-  const copyMenuItem = jQuery('<i class="jp-menu-icon jp-icon-copy" title="Copy to clipboard" />');
+  const copyMenuItem = jQuery("<i class='jp-menu-icon jp-icon-copy' title='Copy to clipboard' />");
   copyMenuItem.click(function () {
     const iframe = jQuery("iframe[data-tab='" + newTabId + "']");
     chrome.extension.sendMessage({
@@ -68,7 +95,7 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
       data: iframe.prop("src")
     });
   });
-  const iFrameHtml = jQuery('<iframe width="100%" data-tab="' + newTabId + '" height="100%" frameborder="0" seamless src="' + tabUrl + '"></iframe>');
+  const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" frameborder="0" seamless src="${tabUrl}"></iframe>`);
 
   menuItemContainer.append(saveMenuItem);
   menuItemContainer.append(copyMenuItem);
@@ -84,45 +111,62 @@ function _setTabClickEvents(consoleContainer) {
   const tabs = consoleContainer.find(".jp-tabs li");
   tabs.off("click");
   tabs.click(function () {
-    const tab_id = jQuery(this).attr("data-tab");
-    console.log(tab_id);
+    const tabId = jQuery(this).attr("data-tab");
+    console.log(tabId);
     _clearSelectedTabs();
 
     jQuery(this).addClass("jp-current");
-    jQuery("#" + tab_id).addClass("jp-current");
+    jQuery("#" + tabId).addClass("jp-current");
   });
 }
 
-
-let _templatesAppended = false;
-function _renderConsole() {
-  let consoleContainer = jQuery("body").find(".jp-console");
-  if (consoleContainer.length === 0) {
+let jpConsoleTemplate = null;
+function _downloadTemplate() {
+  const defered = jQuery.Deferred();
+  if (!jpConsoleTemplate) {
     jQuery.ajax(
       {
         url: chrome.extension.getURL("/templates.html"),
         cache: true
       }).then((templateHtml) => {
-        if (!_templatesAppended) {
-          _templatesAppended = true;
-          jQuery("body").append(templateHtml);
-        }
-        const containerHtml = jQuery("#jenkins-plus-tab-template").html();
-        consoleContainer = jQuery(containerHtml);
-        consoleContainer.find("#jp-closebutton").click(function () {
-          jQuery("#jp-console").remove();
-        });
-        _setTabClickEvents(consoleContainer);
-        consoleContainer.resizable({
-          handles: "n, e, s, w",
-          minHeight: 270,
-          minWidth: 700
-        });
-        jQuery("body").append(consoleContainer);
-        showNoTabs(consoleContainer);
+        jpConsoleTemplate = templateHtml;
+        defered.resolve(templateHtml);
       });
+  } else {
+    defered.resolve(jpConsoleTemplate);
   }
-  return consoleContainer;
+  return defered.promise();
+}
+
+function _renderConsole() {
+  const defered = jQuery.Deferred();
+
+  const consoleContainer = jQuery("body").find(".jp-console");
+  if (consoleContainer.length === 0) {
+    _downloadTemplate().then(function (templateHtml) {
+
+      jQuery("body").append(templateHtml);
+      const containerHtml = jQuery("#jenkins-plus-tab-template").html();
+      const newConsoleContainer = jQuery(containerHtml);
+      newConsoleContainer.find("#jp-closebutton").click(function () {
+        jQuery("#jp-console").remove();
+      });
+      _setTabClickEvents(newConsoleContainer);
+      newConsoleContainer.resizable({
+        handles: "n, e, s, w",
+        minHeight: 270,
+        minWidth: 700
+      });
+      jQuery("body").append(newConsoleContainer);
+      _showNoTabs(newConsoleContainer);
+      defered.resolve(newConsoleContainer);
+    }).fail(function () {
+      defered.reject();
+    });
+  } else {
+    defered.resolve(consoleContainer);
+  }
+  return defered.promise();
 }
 
 function _checkIfAlreadyOpen(consoleContainer, tabText) {
@@ -137,7 +181,8 @@ function _checkIfAlreadyOpen(consoleContainer, tabText) {
 }
 let _consoleIconsRendered = false;
 
-function _injectConsoleIcons() {
+function _injectConsoleIcons(isDevelopment) {
+  console.log(isDevelopment);
   if (_consoleIconsRendered) {
     return;
   }
@@ -151,20 +196,19 @@ function _injectConsoleIcons() {
         const linkText = link.text();
 
         if (gotoLink) {
-          const consoleLink = gotoLink + "console";
-          const consoleContainer = _renderConsole();
-          const isOpen = _checkIfAlreadyOpen(consoleContainer, linkText);
-          if (!isOpen) {
-            _renderTab(consoleContainer, consoleLink, linkText);
-          }
+          const consoleLink = gotoLink + (isDevelopment ? "" : "console");
+          _renderConsole().then(function (consoleContainer) {
+            const isOpen = _checkIfAlreadyOpen(consoleContainer, linkText);
+            if (!isOpen) {
+              _renderTab(consoleContainer, consoleLink, linkText);
+            }
+          });
         }
       } else {
-        alert("Build not started...");
+        toastr.warning("Build not started...");
       }
     });
-
-    //TODO: check for icon already there
-    var container = jQuery(this).find(".build-controls .build-badge");
+    const container = jQuery(this).find(".build-controls .build-badge");
     container.append(htmlObj);
     _consoleIconsRendered = true;
   });

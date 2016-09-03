@@ -73,13 +73,6 @@
       "error",
       "always"
     ],
-    "space-before-function-paren": [
-      "error",
-      {
-        "anonymous": "always",
-        "named": "never"
-      }
-    ],
     "jsx-quotes": [
       2,
       "prefer-double"
@@ -145,6 +138,7 @@
         "keywords": true
       }
     ],
+    "no-case-declarations": 1,
     "no-loop-func": 1,
     "camelcase": 1,
     "no-spaced-func": 1,

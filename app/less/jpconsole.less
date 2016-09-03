@@ -29,8 +29,12 @@
     display: inherit;
   }
 }
+
+@tabColor: #ededed;
+@tabTextColor: #222;
+@iframeBackground: #ffffff;
+
 .jp-console {
-  width: 80%;
   position: fixed;
   right: 10px;
   bottom: 10px;
@@ -68,15 +72,15 @@
 	}
 	ul.jp-tabs li {
 		background: none;
-		color: #222;
+		color: @tabTextColor;
 		display: inline-block;
 		padding: 10px 15px;
 		cursor: pointer;
 	}
 
 	ul.jp-tabs li.jp-current{
-		background: #ededed;
-		color: #222;
+		background: @tabColor;
+		color: @tabTextColor;
 	}
 	
 	.jp-outer-content{
@@ -89,13 +93,16 @@
 
 	.jp-tab-content{
 		display: none;
-		background: #ededed;
+		background: @tabColor;
 		padding: 15px;
 		position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
+    iframe{
+      background-color:@iframeBackground;
+    }
    
 	}
 

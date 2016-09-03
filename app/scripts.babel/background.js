@@ -6,27 +6,30 @@ chrome.runtime.onInstalled.addListener(details => {
 const methods = {
   copyClipBoard: () => { console.log("copy called"); },
   saveHtml: () => { console.log("save called"); },
-  renderMock: () => {
+  renderMock: (sendResponse) => {
     chrome.tabs.query({ active: true }, function (tabs) {
       const activeTab = tabs[0];
       getMockHtml().then((html) => {
         chrome.tabs.sendMessage(activeTab.id, {
           action: "rendermock",
-          html: html
+          html: html,
+          activeUrl: activeTab.url
         }, (response) => {
-          console.log(response);
+          sendResponse(response);
         });
       });
-
     });
   },
-  showConsoleViewer: () => {
+  showConsoleViewer: (sendResponse) => {
     chrome.tabs.query({ active: true }, function (tabs) {
       const activeTab = tabs[0];
-      chrome.tabs.sendMessage(activeTab.id, {
-        action: "showconsoleviewer"
-      }, (response) => {
-        console.log(response);
+      chrome.management.getSelf(function (extInfo) {
+        chrome.tabs.sendMessage(activeTab.id, {
+          action: "showconsoleviewer",
+          extInfo: extInfo
+        }, (response) => {
+          sendResponse(response);
+        });
       });
     });
   }
@@ -34,9 +37,10 @@ const methods = {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (methods.hasOwnProperty(request.action)) {
-    methods[request.action](request.data);
+    methods[request.action](sendResponse);
+  } else {
+    sendResponse({ status: "failure", errorId: "failure:unknownRrequestAction", error: "Not a supported request action for Jenkins Plus. Action: " + request.action });
   }
-  sendResponse({ data: "success:background" });
   return true;
 });
 

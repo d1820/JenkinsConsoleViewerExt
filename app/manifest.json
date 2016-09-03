@@ -27,7 +27,8 @@
     "http://*/*",
     "https://*/*",
     "storage",
-    "clipboardWrite"
+    "clipboardWrite",
+    "management"
   ],
   "options_ui": {
     "page": "options.html",
@@ -39,10 +40,11 @@
         "http://*/*",
         "https://*/*"
       ],
-      "css": [ "styles/jquery.ui.css", "styles/jpconsole.css", "styles/mock.css" ],
+      "css": [ "styles/jquery.ui.css", "styles/toastr.min.css", "styles/jpconsole.css", "styles/mock.css" ],
       "js": [
         "scripts/jquery.min.js",
         "scripts/jquery.ui.resizable.min.js",
+        "scripts/toastr.min.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end"

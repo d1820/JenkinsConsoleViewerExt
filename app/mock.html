@@ -1,724 +1,687 @@
 <div class="jp-mock-template">
   <div id="buildHistory" class="container-fluid pane-frame track-mouse expanded" style="width:300px">
-    <div class="row">
-      <div class="col-xs-24 pane-header">
-        <a href="/toggleCollapse?paneId=buildHistory" title="collapse" class="collapse">
-          <img src="https://cdn2.iconfinder.com/data/icons/fugue/icon/toggle.png" alt="collapse" style="width: 16px; height: 16px; "
-            class="icon-collapse icon-sm" />
-        </a>
-        <div style="float:right">
-          <a href="https://test.com">trend</a>
-        </div>
-        <div data="100" class="healthReport" onmouseover="this.className='healthReport hover';return true;
-        " onmouseout="this.className='healthReport';return true;">
-          <a href="https://test.com/lastBuild" class="build-health-link">
-            <img src="http://icons.iconarchive.com/icons/pixelmixer/basic/16/plus-icon.png" alt="100%" style="width: 16px; height: 16px; "
-              class="icon-health-80plus icon-sm" />
-          </a>
-          <div class="healthReportDetails">
-            <table border="0">
-              <thead>
-                <tr>
-                  <th align="left">W</th>
-                  <th align="left">Description</th>
-                  <th align="right">%</th>
-                </tr>
-              </thead>
+    <h3>Mock Jenkins Layout</h3>
+  </div>
+  <div class="row pane-content">
+    <table class="pane stripped">
+      <tbody>
+        <tr class="build-search-row">
+          <td>
+            <table>
               <tbody>
                 <tr>
-                  <td align="left">
-                    <img src="http://icons.iconarchive.com/icons/pixelmixer/basic/16/plus-icon.png" style="width: 16px; height: 16px; " class="icon-health-80plus icon-sm"
-                    />
+                  <td>
+                    <span title="Clear" class="clear">x</span>
+                    <input placeholder="find" />
                   </td>
-                  <td>Build stability: No recent builds failed.</td>
-                  <td align="right">100</td>
                 </tr>
               </tbody>
             </table>
-          </div>
-        </div>
-        Build History</div>
-    </div>
-    <div class="row pane-content">
-      <table class="pane stripped">
-        <tbody>
-          <tr class="build-search-row">
-            <td>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <span title="Clear" class="clear">x</span>
-                      <input placeholder="find" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr page-entry-id="7937" id="7937" class="build-row build-pending transitive multi-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="block wrap build-name-controls">
-                <div class="pane build-name wrapped" style="float: left; height: 16px;">
-                  <div class="build-icon">
-                    <img src="http://icons.iconarchive.com/icons/shiftercat/celtic-knot/16/grey-circleknot-icon.png" style="width: 16px; height: 16px; "
-                      class="icon-grey icon-sm" />
-                  </div>
-                  <div title="Expected build number" class="display-name zws-inserted">#4​40​4 </div>
-                </div>
-                <div class="pane build-controls wrapped" style="float: right;">
-                  <div class="build-stop">
-                    <a onclick="new Ajax.Request(this.href); return false" href="/queue/cancelItem?id=7937" class="stop-button-link">
-                      <img src="https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Stop_sign.png" style="width: 16px; height: 16px; "
-                        class="icon-stop icon-sm" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-              <div class="pane build-details indent-multiline block">
-                (pending—Build #4,403 is already in progress (ETA:24 sec))
-                <div style="float:right;margin-right:10px;">
-                  <a tooltip="Build Parameters:<br>SELECT_APP=SELFSERVICE<br>TAG=2.1.493<br>ENVIRONMENT=SelfService-QA1-N01APL627" href="#"
-                    title="Build Parameters:<br>SELECT_APP=SELFSERVICE<br>TAG=2.1.493<br>ENVIRONMENT=SelfService-QA1-N01APL627">
-                    <img src="http://icons.veryicon.com/16/Application/Sleek%20XP%20Software/Notepad%2B%2B.png" style="width: 16px; height: 16px; "
-                      class="icon-notepad icon-sm" />
-                  </a>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771405" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
+          </td>
+        </tr>
+        <tr page-entry-id="7937" id="7937" class="build-row build-pending transitive multi-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="block wrap build-name-controls">
+              <div class="pane build-name wrapped" style="float: left; height: 16px;">
                 <div class="build-icon">
-                  <a href="https://test.com" class="build-status-link">
-                      <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="In progress > Console Output" tooltip="In progress > Console Output" style="width: 16px; height: 16px; " class="icon-blue-anime icon-sm" title="In progress > Console Output" />
-                    </a>
+                  <img src="http://icons.iconarchive.com/icons/shiftercat/celtic-knot/16/grey-circleknot-icon.png" style="width: 16px; height: 16px; "
+                    class="icon-grey icon-sm" />
                 </div>
-                <a update-parent-class=".build-row" href="https://test.com" class="tip model-link inside build-link display-name zws-inserted">#4​40​3 </a>
+                <div title="Expected build number" class="display-name zws-inserted">#4​40​4 </div>
               </div>
-              <div time="1472572483546" class="pane build-details">
-                <a update-parent-class=".build-row" href="https://test.com" class="tip model-link inside build-link">Aug 30, 2016 8:54 AM</a>
-                <table tooltip="Started 2.8 sec ago<br> Estimated remaining time: 45 sec" style="cursor:pointer" href="https://test.com/4403/console"
-                  class="progress-bar " title="Started 2.8 sec ago<br> Estimated remaining time: 45 sec">
-                  <tbody>
-                    <tr>
-                      <td style="width:5%;" class="progress-bar-done"></td>
-                      <td style="width:95%" class="progress-bar-left"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 24px;display: inline-block;">
-                  <font color="gray">-</font>
-                </div>
-                <div class="build-stop" style="width: 24px;display: inline-block;">
-                  <a onclick="new Ajax.Request(this.href); return false" href="https://test.com/4403/stop" class="stop-button-link">
+              <div class="pane build-controls wrapped" style="float: right;">
+                <div class="build-stop">
+                  <a onclick="new Ajax.Request(this.href); return false" href="/queue/cancelItem?id=7937" class="stop-button-link">
                     <img src="https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Stop_sign.png" style="width: 16px; height: 16px; "
                       class="icon-stop icon-sm" />
                   </a>
                 </div>
               </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771406" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4402/console" class="build-status-link">
+            </div>
+            <div class="pane build-details indent-multiline block">
+              (pending—Build #4,403 is already in progress (ETA:24 sec))
+              <div style="float:right;margin-right:10px;">
+                <a tooltip="Build Parameters:<br>SELECT_APP=SELFSERVICE<br>TAG=2.1.493<br>ENVIRONMENT=SelfService-QA1-N01APL627" href="#"
+                  title="Build Parameters:<br>SELECT_APP=SELFSERVICE<br>TAG=2.1.493<br>ENVIRONMENT=SelfService-QA1-N01APL627">
+                  <img src="http://icons.veryicon.com/16/Application/Sleek%20XP%20Software/Notepad%2B%2B.png" style="width: 16px; height: 16px; "
+                    class="icon-notepad icon-sm" />
+                </a>
+              </div>
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771405" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com" class="build-status-link">
+                      <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="In progress > Console Output" tooltip="In progress > Console Output" style="width: 16px; height: 16px; " class="icon-blue-anime icon-sm" title="In progress > Console Output" />
+                    </a>
+              </div>
+              <a update-parent-class=".build-row" href="https://test.com" class="tip model-link inside build-link display-name zws-inserted">#4​40​3 </a>
+            </div>
+            <div time="1472572483546" class="pane build-details">
+              <a update-parent-class=".build-row" href="https://test.com" class="tip model-link inside build-link">Aug 30, 2016 8:54 AM</a>
+              <table tooltip="Started 2.8 sec ago<br> Estimated remaining time: 45 sec" style="cursor:pointer" href="https://test.com/4403/console"
+                class="progress-bar " title="Started 2.8 sec ago<br> Estimated remaining time: 45 sec">
+                <tbody>
+                  <tr>
+                    <td style="width:5%;" class="progress-bar-done"></td>
+                    <td style="width:95%" class="progress-bar-left"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 24px;display: inline-block;">
+                <font color="gray">-</font>
+              </div>
+              <div class="build-stop" style="width: 24px;display: inline-block;">
+                <a onclick="new Ajax.Request(this.href); return false" href="https://test.com/4403/stop" class="stop-button-link">
+                  <img src="https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Stop_sign.png" style="width: 16px; height: 16px; "
+                    class="icon-stop icon-sm" />
+                </a>
+              </div>
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771406" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4402/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4402/" class="tip model-link inside build-link display-name zws-inserted">#4​40​2 </a>
               </div>
-              <div time="1472571315929" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4402/" class="tip model-link inside build-link">Aug 30, 2016 8:35 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4402/" class="tip model-link inside build-link display-name zws-inserted">#4​40​2 </a>
+            </div>
+            <div time="1472571315929" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4402/" class="tip model-link inside build-link">Aug 30, 2016 8:35 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771407" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4401/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771407" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4401/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4401/" class="tip model-link inside build-link display-name zws-inserted">#4​40​1 </a>
               </div>
-              <div time="1472571272460" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4401/" class="tip model-link inside build-link">Aug 30, 2016 8:34 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4401/" class="tip model-link inside build-link display-name zws-inserted">#4​40​1 </a>
+            </div>
+            <div time="1472571272460" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4401/" class="tip model-link inside build-link">Aug 30, 2016 8:34 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771408" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4400/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771408" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4400/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4400/" class="tip model-link inside build-link display-name zws-inserted">#4​40​0 </a>
               </div>
-              <div time="1472568464959" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4400/" class="tip model-link inside build-link">Aug 30, 2016 7:47 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4400/" class="tip model-link inside build-link display-name zws-inserted">#4​40​0 </a>
+            </div>
+            <div time="1472568464959" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4400/" class="tip model-link inside build-link">Aug 30, 2016 7:47 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771409" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4399/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771409" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4399/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4399/" class="tip model-link inside build-link display-name zws-inserted">#4​39​9 </a>
               </div>
-              <div time="1472568418974" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4399/" class="tip model-link inside build-link">Aug 30, 2016 7:46 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4399/" class="tip model-link inside build-link display-name zws-inserted">#4​39​9 </a>
+            </div>
+            <div time="1472568418974" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4399/" class="tip model-link inside build-link">Aug 30, 2016 7:46 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771410" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4398/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771410" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4398/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4398/" class="tip model-link inside build-link display-name zws-inserted">#4​39​8 </a>
               </div>
-              <div time="1472513092525" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4398/" class="tip model-link inside build-link">Aug 29, 2016 4:24 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4398/" class="tip model-link inside build-link display-name zws-inserted">#4​39​8 </a>
+            </div>
+            <div time="1472513092525" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4398/" class="tip model-link inside build-link">Aug 29, 2016 4:24 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771411" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4397/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771411" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4397/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4397/" class="tip model-link inside build-link display-name zws-inserted">#4​39​7 </a>
               </div>
-              <div time="1472507312246" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4397/" class="tip model-link inside build-link">Aug 29, 2016 2:48 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4397/" class="tip model-link inside build-link display-name zws-inserted">#4​39​7 </a>
+            </div>
+            <div time="1472507312246" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4397/" class="tip model-link inside build-link">Aug 29, 2016 2:48 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771412" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4396/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771412" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4396/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4396/" class="tip model-link inside build-link display-name zws-inserted">#4​39​6 </a>
               </div>
-              <div time="1472504755644" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4396/" class="tip model-link inside build-link">Aug 29, 2016 2:05 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4396/" class="tip model-link inside build-link display-name zws-inserted">#4​39​6 </a>
+            </div>
+            <div time="1472504755644" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4396/" class="tip model-link inside build-link">Aug 29, 2016 2:05 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771413" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4395/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771413" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4395/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4395/" class="tip model-link inside build-link display-name zws-inserted">#4​39​5 </a>
               </div>
-              <div time="1472502484555" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4395/" class="tip model-link inside build-link">Aug 29, 2016 1:28 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4395/" class="tip model-link inside build-link display-name zws-inserted">#4​39​5 </a>
+            </div>
+            <div time="1472502484555" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4395/" class="tip model-link inside build-link">Aug 29, 2016 1:28 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771414" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4394/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771414" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4394/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4394/" class="tip model-link inside build-link display-name zws-inserted">#4​39​4 </a>
               </div>
-              <div time="1472498728813" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4394/" class="tip model-link inside build-link">Aug 29, 2016 12:25 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4394/" class="tip model-link inside build-link display-name zws-inserted">#4​39​4 </a>
+            </div>
+            <div time="1472498728813" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4394/" class="tip model-link inside build-link">Aug 29, 2016 12:25 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771415" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4393/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771415" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4393/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4393/" class="tip model-link inside build-link display-name zws-inserted">#4​39​3 </a>
               </div>
-              <div time="1472498680921" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4393/" class="tip model-link inside build-link">Aug 29, 2016 12:24 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4393/" class="tip model-link inside build-link display-name zws-inserted">#4​39​3 </a>
+            </div>
+            <div time="1472498680921" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4393/" class="tip model-link inside build-link">Aug 29, 2016 12:24 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771416" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4392/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771416" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4392/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4392/" class="tip model-link inside build-link display-name zws-inserted">#4​39​2 </a>
               </div>
-              <div time="1472498633443" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4392/" class="tip model-link inside build-link">Aug 29, 2016 12:23 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4392/" class="tip model-link inside build-link display-name zws-inserted">#4​39​2 </a>
+            </div>
+            <div time="1472498633443" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4392/" class="tip model-link inside build-link">Aug 29, 2016 12:23 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771417" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4391/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771417" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4391/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4391/" class="tip model-link inside build-link display-name zws-inserted">#4​39​1 </a>
               </div>
-              <div time="1472497777016" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4391/" class="tip model-link inside build-link">Aug 29, 2016 12:09 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4391/" class="tip model-link inside build-link display-name zws-inserted">#4​39​1 </a>
+            </div>
+            <div time="1472497777016" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4391/" class="tip model-link inside build-link">Aug 29, 2016 12:09 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771418" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4390/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771418" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4390/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4390/" class="tip model-link inside build-link display-name zws-inserted">#4​39​0 </a>
               </div>
-              <div time="1472497728890" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4390/" class="tip model-link inside build-link">Aug 29, 2016 12:08 PM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4390/" class="tip model-link inside build-link display-name zws-inserted">#4​39​0 </a>
+            </div>
+            <div time="1472497728890" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4390/" class="tip model-link inside build-link">Aug 29, 2016 12:08 PM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771419" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4389/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771419" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4389/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4389/" class="tip model-link inside build-link display-name zws-inserted">#4​38​9 </a>
               </div>
-              <div time="1472496654393" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4389/" class="tip model-link inside build-link">Aug 29, 2016 11:50 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4389/" class="tip model-link inside build-link display-name zws-inserted">#4​38​9 </a>
+            </div>
+            <div time="1472496654393" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4389/" class="tip model-link inside build-link">Aug 29, 2016 11:50 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771420" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4388/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771420" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4388/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4388/" class="tip model-link inside build-link display-name zws-inserted">#4​38​8 </a>
               </div>
-              <div time="1472496022331" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4388/" class="tip model-link inside build-link">Aug 29, 2016 11:40 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4388/" class="tip model-link inside build-link display-name zws-inserted">#4​38​8 </a>
+            </div>
+            <div time="1472496022331" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4388/" class="tip model-link inside build-link">Aug 29, 2016 11:40 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">80 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">80 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771421" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4387/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771421" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4387/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4387/" class="tip model-link inside build-link display-name zws-inserted">#4​38​7 </a>
               </div>
-              <div time="1472495994320" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4387/" class="tip model-link inside build-link">Aug 29, 2016 11:39 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4387/" class="tip model-link inside build-link display-name zws-inserted">#4​38​7 </a>
+            </div>
+            <div time="1472495994320" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4387/" class="tip model-link inside build-link">Aug 29, 2016 11:39 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">67 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">67 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771422" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4386/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771422" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4386/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4386/" class="tip model-link inside build-link display-name zws-inserted">#4​38​6 </a>
               </div>
-              <div time="1472495945768" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4386/" class="tip model-link inside build-link">Aug 29, 2016 11:39 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4386/" class="tip model-link inside build-link display-name zws-inserted">#4​38​6 </a>
+            </div>
+            <div time="1472495945768" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4386/" class="tip model-link inside build-link">Aug 29, 2016 11:39 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771423" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4385/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771423" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4385/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4385/" class="tip model-link inside build-link display-name zws-inserted">#4​38​5 </a>
               </div>
-              <div time="1472495900761" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4385/" class="tip model-link inside build-link">Aug 29, 2016 11:38 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4385/" class="tip model-link inside build-link display-name zws-inserted">#4​38​5 </a>
+            </div>
+            <div time="1472495900761" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4385/" class="tip model-link inside build-link">Aug 29, 2016 11:38 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771424" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4384/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771424" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4384/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4384/" class="tip model-link inside build-link display-name zws-inserted">#4​38​4 </a>
               </div>
-              <div time="1472495855982" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4384/" class="tip model-link inside build-link">Aug 29, 2016 11:37 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4384/" class="tip model-link inside build-link display-name zws-inserted">#4​38​4 </a>
+            </div>
+            <div time="1472495855982" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4384/" class="tip model-link inside build-link">Aug 29, 2016 11:37 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771425" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4383/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771425" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4383/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4383/" class="tip model-link inside build-link display-name zws-inserted">#4​38​3 </a>
               </div>
-              <div time="1472495649685" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4383/" class="tip model-link inside build-link">Aug 29, 2016 11:34 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4383/" class="tip model-link inside build-link display-name zws-inserted">#4​38​3 </a>
+            </div>
+            <div time="1472495649685" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4383/" class="tip model-link inside build-link">Aug 29, 2016 11:34 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">80 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">80 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771426" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4382/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771426" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4382/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4382/" class="tip model-link inside build-link display-name zws-inserted">#4​38​2 </a>
               </div>
-              <div time="1472495446638" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4382/" class="tip model-link inside build-link">Aug 29, 2016 11:30 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4382/" class="tip model-link inside build-link display-name zws-inserted">#4​38​2 </a>
+            </div>
+            <div time="1472495446638" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4382/" class="tip model-link inside build-link">Aug 29, 2016 11:30 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">67 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">67 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771427" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4381/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771427" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4381/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4381/" class="tip model-link inside build-link display-name zws-inserted">#4​38​1 </a>
               </div>
-              <div time="1472495387371" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4381/" class="tip model-link inside build-link">Aug 29, 2016 11:29 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4381/" class="tip model-link inside build-link display-name zws-inserted">#4​38​1 </a>
+            </div>
+            <div time="1472495387371" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4381/" class="tip model-link inside build-link">Aug 29, 2016 11:29 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771428" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4380/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771428" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4380/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4380/" class="tip model-link inside build-link display-name zws-inserted">#4​38​0 </a>
               </div>
-              <div time="1472495330545" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4380/" class="tip model-link inside build-link">Aug 29, 2016 11:28 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4380/" class="tip model-link inside build-link display-name zws-inserted">#4​38​0 </a>
+            </div>
+            <div time="1472495330545" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4380/" class="tip model-link inside build-link">Aug 29, 2016 11:28 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771429" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4379/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771429" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4379/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4379/" class="tip model-link inside build-link display-name zws-inserted">#4​37​9 </a>
               </div>
-              <div time="1472495177911" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4379/" class="tip model-link inside build-link">Aug 29, 2016 11:26 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4379/" class="tip model-link inside build-link display-name zws-inserted">#4​37​9 </a>
+            </div>
+            <div time="1472495177911" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4379/" class="tip model-link inside build-link">Aug 29, 2016 11:26 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771430" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4378/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771430" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4378/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4378/" class="tip model-link inside build-link display-name zws-inserted">#4​37​8 </a>
               </div>
-              <div time="1472494238981" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4378/" class="tip model-link inside build-link">Aug 29, 2016 11:10 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4378/" class="tip model-link inside build-link display-name zws-inserted">#4​37​8 </a>
+            </div>
+            <div time="1472494238981" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4378/" class="tip model-link inside build-link">Aug 29, 2016 11:10 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771431" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4377/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771431" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4377/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4377/" class="tip model-link inside build-link display-name zws-inserted">#4​37​7 </a>
               </div>
-              <div time="1472494216405" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4377/" class="tip model-link inside build-link">Aug 29, 2016 11:10 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4377/" class="tip model-link inside build-link display-name zws-inserted">#4​37​7 </a>
+            </div>
+            <div time="1472494216405" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4377/" class="tip model-link inside build-link">Aug 29, 2016 11:10 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771432" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4376/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771432" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4376/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="/job/Digital-Services/job/DigitalServicePlatForm/job/Digital-Services-Builds/job/DSPlatformDeploy/4376/"
-                  class="tip model-link inside build-link display-name zws-inserted">#4​37​6 </a>
               </div>
-              <div time="1472494021003" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="/job/Digital-Services/job/DigitalServicePlatForm/job/Digital-Services-Builds/job/DSPlatformDeploy/4376/"
-                  class="tip model-link inside build-link">Aug 29, 2016 11:07 AM</a>
+              <a update-parent-class=".build-row" href="/job/Digital-Services/job/DigitalServicePlatForm/job/Digital-Services-Builds/job/DSPlatformDeploy/4376/"
+                class="tip model-link inside build-link display-name zws-inserted">#4​37​6 </a>
+            </div>
+            <div time="1472494021003" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="/job/Digital-Services/job/DigitalServicePlatForm/job/Digital-Services-Builds/job/DSPlatformDeploy/4376/"
+                class="tip model-link inside build-link">Aug 29, 2016 11:07 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">238 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">238 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-          <tr page-entry-id="-9223372036854771433" class="build-row  single-line overflow-checked">
-            <td class="build-row-cell">
-              <div class="pane build-name" style="height: 18px;">
-                <div class="build-icon">
-                  <a href="https://test.com/4375/console" class="build-status-link">
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+        <tr page-entry-id="-9223372036854771433" class="build-row  single-line overflow-checked">
+          <td class="build-row-cell">
+            <div class="pane build-name" style="height: 18px;">
+              <div class="build-icon">
+                <a href="https://test.com/4375/console" class="build-status-link">
                       <img src="http://findicons.com/files/icons/2583/sweetieplus/24/circle_blue_24_ns.png" alt="Success > Console Output" tooltip="Success > Console Output" style="width: 16px; height: 16px; " class="icon-blue icon-sm" title="Success > Console Output" />
                     </a>
-                </div>
-                <a update-parent-class=".build-row" href="https://test.com/4375/" class="tip model-link inside build-link display-name zws-inserted">#4​37​5 </a>
               </div>
-              <div time="1472493827201" class="pane build-details" style="height: 18px;">
-                <a update-parent-class=".build-row" href="https://test.com/4375/" class="tip model-link inside build-link">Aug 29, 2016 11:03 AM</a>
+              <a update-parent-class=".build-row" href="https://test.com/4375/" class="tip model-link inside build-link display-name zws-inserted">#4​37​5 </a>
+            </div>
+            <div time="1472493827201" class="pane build-details" style="height: 18px;">
+              <a update-parent-class=".build-row" href="https://test.com/4375/" class="tip model-link inside build-link">Aug 29, 2016 11:03 AM</a>
+            </div>
+            <div class="pane build-controls">
+              <div class="middle-align build-badge" style="width: 100%;">
+                <font color="gray">24 KB</font>
               </div>
-              <div class="pane build-controls">
-                <div class="middle-align build-badge" style="width: 100%;">
-                  <font color="gray">24 KB</font>
-                </div>
-              </div>
-              <div class="left-bar"></div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="row">
-
-    </div>
+            </div>
+            <div class="left-bar"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <div class="row">
+
+  </div>
+</div>
 </div>
