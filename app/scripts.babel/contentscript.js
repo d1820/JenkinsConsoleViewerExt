@@ -4,13 +4,19 @@ let _jpConsoleTemplate = null;
 let _consoleIconsRendered = false;
 let _jpConsoleOptions;
 
+//keep these in sync with options.js
 const jpDefaultOptions = {
   transparency: 0.9,
-  theme: "jp-theme-dark"
+  theme: "jp-theme-dark",
+  autoOpenConsole: false
 };
 
 chrome.storage.sync.get(jpDefaultOptions, (options) => {
   _jpConsoleOptions = options;
+
+  if (options.autoOpenConsole) {
+    _renderConsole(_jpConsoleOptions);
+  }
 });
 
 chrome.storage.onChanged.addListener(function (changes) {
@@ -56,8 +62,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   return true;
 });
-
-
 
 function _createError(errorId, error) {
   return {

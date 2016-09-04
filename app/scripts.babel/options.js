@@ -3,7 +3,8 @@ console.log("\"Allo \"Allo! Option");
 
 const jpDefaultOptions = {
   transparency: 0.9,
-  theme: "jp-theme-dark"
+  theme: "jp-theme-dark",
+  autoOpenConsole: false
 };
 
 // Saves options to chrome.storage.sync.
