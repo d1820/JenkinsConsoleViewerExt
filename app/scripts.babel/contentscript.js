@@ -25,7 +25,8 @@ chrome.storage.onChanged.addListener(function (changes) {
       _jpConsoleOptions[k] = changes[k].newValue;
     }
   }
-  _renderConsole(_jpConsoleOptions);
+  //console.log(_jpConsoleOptions);
+  _renderConsole(_jpConsoleOptions, true);
 });
 
 
@@ -223,11 +224,11 @@ function _setTheme(consoleContainer, options) {
   consoleContainer.addClass(options.theme);
 }
 
-function _renderConsole(options) {
+function _renderConsole(options, forceRedraw) {
   const defered = jQuery.Deferred();
 
   const consoleContainer = jQuery("body").find(".jp-console");
-  if (consoleContainer.length === 0) {
+  if (consoleContainer.length === 0 || forceRedraw) {
     _downloadTemplate().then(function (templateHtml) {
 
       jQuery("body").append(templateHtml);
@@ -251,6 +252,9 @@ function _renderConsole(options) {
         minHeight: 270,
         minWidth: 700
       });
+      if (forceRedraw) {
+        jQuery("#jp-console").remove();
+      }
       jQuery("body").append(newConsoleContainer);
       _showNoTabs(newConsoleContainer);
       defered.resolve(newConsoleContainer);
@@ -276,7 +280,6 @@ function _checkIfAlreadyOpen(consoleContainer, tabText) {
 
 
 function _injectConsoleIcons(isDevelopment) {
-  console.log(isDevelopment);
   if (_consoleIconsRendered) {
     return;
   }
