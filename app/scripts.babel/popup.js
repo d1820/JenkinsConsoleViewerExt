@@ -30,9 +30,6 @@ chrome.management.getSelf(function (extInfo) {
   });
 });
 
-
-
-
 Element.prototype.remove = function () {
   this.parentElement.removeChild(this);
 };

@@ -1,7 +1,7 @@
 console.log("\"Allo \"Allo! Option");
 
 // Saves options to chrome.storage.sync.
-function save_options() {
+function saveOptions() {
   const color = document.getElementById("color").value;
   const likesColor = document.getElementById("like").checked;
   chrome.storage.sync.set({
@@ -19,7 +19,7 @@ function save_options() {
 
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
-function restore_options() {
+function restoreOptions() {
   // Use default value color = "red" and likesColor = true.
   chrome.storage.sync.get({
     favoriteColor: "red",
@@ -29,6 +29,6 @@ function restore_options() {
     document.getElementById("like").checked = items.likesColor;
   });
 }
-document.addEventListener("DOMContentLoaded", restore_options);
+document.addEventListener("DOMContentLoaded", restoreOptions);
 document.getElementById("save").addEventListener("click",
-    save_options);
+    saveOptions);
