@@ -2,18 +2,35 @@
 
 let _jpConsoleTemplate = null;
 let _consoleIconsRendered = false;
+let _jpConsoleOptions;
+
+const jpDefaultOptions = {
+  transparency: 0.9,
+  theme: "jp-theme-dark"
+};
+
+chrome.storage.sync.get(jpDefaultOptions, (options) => {
+  _jpConsoleOptions = options;
+});
+
+chrome.storage.onChanged.addListener(function (changes) {
+  for (const k in changes) {
+    if (_jpConsoleOptions.hasOwnProperty(k)) {
+      _jpConsoleOptions[k] = changes[k].newValue;
+    }
+  }
+  _renderConsole(_jpConsoleOptions);
+});
+
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   //console.log(sender.tab ?     "from a content script:" + sender.tab.url :    "from the extension");
   switch (request.action) {
-    case "updateoptions":
-
-      break;
     case "showconsoleviewer":
       {
         if (_hasJenkinsBuildLinks()) {
           _injectConsoleIcons(_isDevelopment(request.extInfo));
-          _renderConsole().then(function () {
+          _renderConsole(_jpConsoleOptions).then(function () {
             sendResponse({ status: "success" });
           });
           break;
@@ -39,6 +56,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
   return true;
 });
+
+
 
 function _createError(errorId, error) {
   return {
@@ -132,9 +151,9 @@ function _setupOpenMenuItem() {
   const openMenuItem = jQuery("<i class='fa fa-share-square jp-menu-icon jp-icon-open' title='Open in new tab' />");
   openMenuItem.click(function () {
     try {
-      chrome.extension.sendMessage({
+      chrome.runtime.sendMessage({
         action: "openInNewTab",
-        data: tabUrl
+        data: { url: tabUrl }
       });
     } catch (e) {
       toastr.error("Unable to open in new tab. Error: " + e.message);
@@ -149,9 +168,9 @@ function _setupCopyMenuItem(newTabId) {
     try {
       //TODO filter down to section of output only
       const body = iframe.contents().find("body");
-      chrome.extension.sendMessage({
+      chrome.runtime.sendMessage({
         action: "copyClipBoard",
-        data: body.text()
+        data: { innerText: body.text() }
       }, function (response) {
         if (response) {
           toastr.info(response.status);
@@ -194,7 +213,13 @@ function _downloadTemplate() {
   return defered.promise();
 }
 
-function _renderConsole() {
+function _setTheme(consoleContainer, options) {
+  consoleContainer.removeClass("jp-theme-dark");
+  consoleContainer.removeClass("jp-theme-light");
+  consoleContainer.addClass(options.theme);
+}
+
+function _renderConsole(options) {
   const defered = jQuery.Deferred();
 
   const consoleContainer = jQuery("body").find(".jp-console");
@@ -204,7 +229,15 @@ function _renderConsole() {
       jQuery("body").append(templateHtml);
       const containerHtml = jQuery("#jenkins-plus-tab-template").html();
       const newConsoleContainer = jQuery(containerHtml);
-      newConsoleContainer.addClass("jp-theme-dark");
+      _setTheme(newConsoleContainer, options);
+      newConsoleContainer.hover(function () {
+        //hover in
+        $(this).fadeTo("fast", 1);
+      }, function () {
+        //hover out
+        $(this).fadeTo("fast", options.transparency);
+      });
+
       newConsoleContainer.find("#jp-closebutton").click(function () {
         jQuery("#jp-console").remove();
       });

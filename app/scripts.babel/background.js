@@ -1,18 +1,14 @@
 
-chrome.runtime.onInstalled.addListener(details => {
-  console.log("previousVersion", details);
-  //get info from local storage
-});
 
 const methods = {
   openInNewTab: (data, sendResponse) => {
-    chrome.tabs.create({ url: data });
+    chrome.tabs.create({ url: data.url });
     sendResponse({ status: "success" });
   },
   copyClipBoard: (data, sendResponse) => {
     const input = document.createElement("textarea");
     document.body.appendChild(input);
-    input.value = data;
+    input.value = data.innerText;
     input.focus();
     input.select();
     document.execCommand("Copy");
@@ -27,9 +23,7 @@ const methods = {
           action: "rendermock",
           html: html,
           activeUrl: activeTab.url
-        }, (response) => {
-          sendResponse(response);
-        });
+        }, sendResponse);
       });
     });
   },
@@ -40,26 +34,16 @@ const methods = {
         chrome.tabs.sendMessage(activeTab.id, {
           action: "showconsoleviewer",
           extInfo: extInfo
-        }, (response) => {
-          sendResponse(response);
-        });
-      });
-    });
-  },
-  updateOptions: (sendResponse) => {
-    chrome.tabs.query({ active: true }, function (tabs) {
-      const activeTab = tabs[0];
-      chrome.management.getSelf(function (extInfo) {
-        chrome.tabs.sendMessage(activeTab.id, {
-          action: "updateoptions",
-          extInfo: extInfo
-        }, function (response) {
-          sendResponse(response);
-        });
+        }, sendResponse);
       });
     });
   }
 };
+
+
+chrome.runtime.onInstalled.addListener(details => {
+  console.log("previousVersion", details);
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (methods.hasOwnProperty(request.action)) {

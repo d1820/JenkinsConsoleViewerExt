@@ -2,40 +2,24 @@
 <html>
 
 <head>
-  <!-- build:css styles/options-vendor.css -->
-  <!-- bower:css -->
-  <!-- endbower -->
-  <!-- endbuild -->
-  <!-- build:css styles/main.css -->
   <link href="styles/options.css" rel="stylesheet">
-  <!-- endbuild -->
 </head>
-
+<!-- TODO format this better -->
 <body>
-  Favorite color:
-  <select id="color">
-   <option value="red">red</option>
-   <option value="green">green</option>
-   <option value="blue">blue</option>
-   <option value="yellow">yellow</option>
+  Select Theme:
+  <select id="theme">
+   <option value="jp-theme-dark">Dark</option>
+   <option value="jp-theme-light">Light</option>
   </select>
-
-  <label>
-    <input type="checkbox" id="like">
-    I like colors.
-  </label>
+  
+  Set Transparency level of console: 
+   <input type="text" id="transparency" value="0.95"> 
+    
+  
 
   <div id="status"></div>
   <button id="save">Save</button>
-
-  <!-- build:js scripts/options-vendor.js -->
-  <!-- bower:js -->
-  <!-- endbower -->
-  <!-- endbuild -->
-
-  <!-- build:js scripts/options.js -->
   <script src="scripts/options.js"></script>
-  <!-- endbuild -->
 </body>
 
 </html>

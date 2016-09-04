@@ -15,7 +15,7 @@ chrome.management.getSelf(function (extInfo) {
     document.getElementById("mockJenkins").addEventListener("click", function () {
       chrome.runtime.sendMessage({
         action: "renderMock"
-      });
+      }, ()=>{});
     });
   } else {
     document.getElementById("mockJenkins").remove();
