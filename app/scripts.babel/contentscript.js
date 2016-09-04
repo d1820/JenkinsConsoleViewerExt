@@ -1,20 +1,30 @@
 /* eslint no-undef: 0 */
+
+let _jpConsoleTemplate = null;
+let _consoleIconsRendered = false;
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   //console.log(sender.tab ?     "from a content script:" + sender.tab.url :    "from the extension");
   switch (request.action) {
+    case "updateoptions":
+
+      break;
     case "showconsoleviewer":
-      if (_hasJenkinsBuildLinks()) {
-        _injectConsoleIcons(_isDevelopment(request.extInfo));
-        _renderConsole().then(function () {
-          sendResponse({ status: "success" });
-        });
+      {
+        if (_hasJenkinsBuildLinks()) {
+          _injectConsoleIcons(_isDevelopment(request.extInfo));
+          _renderConsole().then(function () {
+            sendResponse({ status: "success" });
+          });
+          break;
+        }
+        const err = _createError("failure:notSuportedPage", "Not a supported page for the Jenkins Console Viewer");
+        toastr.warning(err.error);
+        sendResponse(err);
         break;
       }
-      const err = _createError("failure:notSuportedPage", "Not a supported page for the Jenkins Console Viewer");
-      toastr.warning(err.error);
-      sendResponse(err);
-      break;
-    case "rendermock":
+
+    case "rendermock": {
       const htmldoc = jQuery(request.html);
       htmldoc.find(".build-name a").each(function () {
         $(this).prop("href", request.activeUrl);
@@ -22,6 +32,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       jQuery("body").append(htmldoc);
       sendResponse({ status: "success" });
       break;
+    }
     default:
       sendResponse(_createError("failure:invalidAction", "Unknown action recieved in content script. Action: " + request.action));
       break;
@@ -65,7 +76,7 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
   //clear all selected tabs
   _clearSelectedTabs();
   const closeTabIcon = _setupCloseTabIcon(newTabId, consoleContainer);
-  const tab = jQuery(`<li class="jp-tab-link jp-current" data-tab="${newTabId}"><span>${tabName}<span></li>`);
+  const tab = jQuery(`<li class="jp-tab-link jp-current" data-tab="${newTabId}"><span><b>${tabName}</b><span></li>`);
   tab.append(closeTabIcon);
   tabs.append(tab);
 
@@ -166,20 +177,19 @@ function _setTabClickEvents(consoleContainer) {
   });
 }
 
-let jpConsoleTemplate = null;
 function _downloadTemplate() {
   const defered = jQuery.Deferred();
-  if (!jpConsoleTemplate) {
+  if (!_jpConsoleTemplate) {
     jQuery.ajax(
       {
         url: chrome.extension.getURL("/templates.html"),
         cache: true
       }).then((templateHtml) => {
-        jpConsoleTemplate = templateHtml;
+        _jpConsoleTemplate = templateHtml;
         defered.resolve(templateHtml);
       });
   } else {
-    defered.resolve(jpConsoleTemplate);
+    defered.resolve(_jpConsoleTemplate);
   }
   return defered.promise();
 }
@@ -194,6 +204,7 @@ function _renderConsole() {
       jQuery("body").append(templateHtml);
       const containerHtml = jQuery("#jenkins-plus-tab-template").html();
       const newConsoleContainer = jQuery(containerHtml);
+      newConsoleContainer.addClass("jp-theme-dark");
       newConsoleContainer.find("#jp-closebutton").click(function () {
         jQuery("#jp-console").remove();
       });
@@ -225,7 +236,7 @@ function _checkIfAlreadyOpen(consoleContainer, tabText) {
   }
   return false;
 }
-let _consoleIconsRendered = false;
+
 
 function _injectConsoleIcons(isDevelopment) {
   console.log(isDevelopment);

@@ -38,21 +38,13 @@
   }
 }
 
-@tabColor: #ededed;
-@tabTextColor: #222;
-@iframeBackground: #ffffff;
-@closeIconColor: #e64d1c;
-@menuIconColor: #0E6094;
+
 .jp-console {
   position: fixed;
   right: 10px;
   bottom: 10px;
   z-index: 100000;
-  background-color: white;
-  color: black;
-  border: solid 3px black;
   padding: 10px;
-  box-shadow: 4px 6px 5px #888888;
   min-height: 270px;
   min-width: 700px;
   .jp-close-console {
@@ -77,19 +69,11 @@
   }
   ul.jp-tabs li {
     background: none;
-    color: @tabTextColor;
     display: inline-block;
     padding: 10px 15px;
     cursor: pointer;
-    border-left: 1px solid darken(@tabColor, 20%);
-    border-right: 1px solid darken(@tabColor, 20%);
-    border-top: 1px solid darken(@tabColor, 20%);
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-  }
-  ul.jp-tabs li.jp-current {
-    background-color: @tabColor;
-    color: @tabTextColor;
   }
   .jp-outer-content {
     bottom: 10px;
@@ -100,19 +84,12 @@
   }
   .jp-tab-content {
     display: none;
-    background: @tabColor;
-    border-left: 1px solid darken(@tabColor, 20%);
-    border-right: 1px solid darken(@tabColor, 20%);
-    border-bottom: 1px solid darken(@tabColor, 20%);
     padding: 15px;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
-    iframe {
-      background-color: @iframeBackground;
-    }
   }
   .jp-tab-content.jp-current {
     display: inherit;
@@ -121,20 +98,20 @@
     position: relative;
     top: -10px;
     right: -10px;
-    color: @closeIconColor;
     font-size: 14px;
     cursor: pointer;
   }
   .jp-icon-copy {
-    color: @menuIconColor;
     .jp-menu-icon;
   }
   .jp-icon-save {
-    color: @menuIconColor;
     .jp-menu-icon;
   }
   .jp-icon-open {
-    color: @menuIconColor;
     .jp-menu-icon;
   }
 }
+
+
+@import "imports/light-theme.less";
+@import "imports/dark-theme.less";

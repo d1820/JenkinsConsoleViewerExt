@@ -45,6 +45,19 @@ const methods = {
         });
       });
     });
+  },
+  updateOptions: (sendResponse) => {
+    chrome.tabs.query({ active: true }, function (tabs) {
+      const activeTab = tabs[0];
+      chrome.management.getSelf(function (extInfo) {
+        chrome.tabs.sendMessage(activeTab.id, {
+          action: "updateoptions",
+          extInfo: extInfo
+        }, function (response) {
+          sendResponse(response);
+        });
+      });
+    });
   }
 };
 

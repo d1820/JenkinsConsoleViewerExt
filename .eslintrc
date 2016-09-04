@@ -138,15 +138,15 @@
         "keywords": true
       }
     ],
-    "no-case-declarations": 1,
+    "no-case-declarations": 2,
     "no-loop-func": 1,
-    "camelcase": 1,
+    "camelcase": 2,
     "no-spaced-func": 1,
-    "block-scoped-var": 1,
-    "default-case": 1,
-    "no-fallthrough": 1,
+    "block-scoped-var": 2,
+    "default-case": 2,
+    "no-fallthrough": 2,
     "no-floating-decimal": 1,
-    "vars-on-top": 1,
+    "vars-on-top": 2,
     "no-nested-ternary": 1,
     // disable
     "init-declarations": 0,

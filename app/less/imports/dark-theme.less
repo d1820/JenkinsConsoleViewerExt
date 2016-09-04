@@ -1,0 +1,57 @@
+@tabColor-dark: #424242;
+@tabTextColor-dark: #fafafa;
+@iframeBackground-dark: #ffffff;
+@closeMenuIconColor-dark: #e0e0e0;
+@menuIconColor-dark: #91c784;
+@background-dark: #212121;
+@boxShadow-dark: lighten(@background-dark, 20%);
+@border-dark: darken(@background-dark, 10%);
+@textColor-dark: #fafafa;
+@closeConsoleIconColor-dark: #91c784;
+.jp-theme-dark {
+  background-color: @background-dark;
+  color: @textColor-dark;
+  border: solid 3px @border-dark;
+  box-shadow: 4px 6px 5px @boxShadow-dark;
+  .jp-close-console {
+    .jp-close-console-icon {
+      color: @closeConsoleIconColor-dark;
+    }
+  }
+  .jp-no-tabs {
+    h2 {
+      background-color: @textColor-dark;
+    }
+  }
+  ul.jp-tabs li {
+    color: @tabTextColor-dark;
+    border-left: 1px solid darken(@tabColor-dark, 20%);
+    border-right: 1px solid darken(@tabColor-dark, 20%);
+    border-top: 1px solid darken(@tabColor-dark, 20%);
+  }
+  ul.jp-tabs li.jp-current {
+    background-color: @tabColor-dark;
+    color: @tabTextColor-dark;
+  }
+  .jp-tab-content {
+    background: @tabColor-dark;
+    border-left: 1px solid darken(@tabColor-dark, 20%);
+    border-right: 1px solid darken(@tabColor-dark, 20%);
+    border-bottom: 1px solid darken(@tabColor-dark, 20%);
+    iframe {
+      background-color: @iframeBackground-dark;
+    }
+  }
+  .jp-icon-close-tab {
+    color: @closeMenuIconColor-dark;
+  }
+  .jp-icon-copy {
+    color: @menuIconColor-dark;
+  }
+  .jp-icon-save {
+    color: @menuIconColor-dark;
+  }
+  .jp-icon-open {
+    color: @menuIconColor-dark;
+  }
+}
