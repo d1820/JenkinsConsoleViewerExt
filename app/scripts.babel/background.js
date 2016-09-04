@@ -19,14 +19,6 @@ const methods = {
     input.remove();
     sendResponse({ status: "Copied to clipboard" });
   },
-  saveHtml: (data, sendResponse) => {
-    const doc = new jsPDF();
-    doc.fromHTML(data, 15, 15, {
-      "width": 170
-    });
-    doc.save(data.fileName + ".pdf");
-    sendResponse({ status: "Saved as html" });
-  },
   renderMock: (sendResponse) => {
     chrome.tabs.query({ active: true }, function (tabs) {
       const activeTab = tabs[0];

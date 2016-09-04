@@ -36,14 +36,6 @@ gulp.task("lint", lint("app/scripts.babel/**/*.js", {
   }
 }));
 
-// gulp.task('wiredep', () => {
-//   gulp.src('app/*.html')
-//     .pipe(wiredep({
-//       ignorePath: /^(\.\.\/)*\.\./
-//     }))
-//     .pipe(gulp.dest('app'));
-// });
-
 gulp.task("images", () => {
   return gulp.src("app/images/**/*")
     .pipe($.if($.if.isFile, $.cache($.imagemin({
@@ -60,6 +52,11 @@ gulp.task("images", () => {
     .pipe(gulp.dest("dist/images"));
 });
 
+gulp.task("fonts:build", () => {
+  return gulp.src("app/fonts/**/*.{ttf,woff,eof,svg}")
+    .pipe(gulp.dest("dist/fonts"));
+});
+
 gulp.task("html", () => {
   return gulp.src("app/*.html")
     .pipe($.useref({ searchPath: [".tmp", "app", "."] }))
@@ -72,9 +69,13 @@ gulp.task("html", () => {
 });
 
 gulp.task("chromeManifest", () => {
+  //this looks though manifest and pulls out file references and moves them to dist
   return gulp.src("app/manifest.json")
     .pipe($.chromeManifest({
       buildnumber: true,
+      exclude:[
+        "key"
+      ],
       background: {
         target: "scripts/background.js",
         exclude: [
@@ -102,8 +103,8 @@ gulp.task("clean", del.bind(null, [".tmp", "dist"]));
 gulp.task("watch", [
   //"lint", 
   "babel",
-  "html",
-  "less"], () => {
+  "less:local",
+  "html"], () => {
     $.livereload.listen();
 
     gulp.watch([
@@ -117,19 +118,27 @@ gulp.task("watch", [
     gulp.watch("app/scripts.babel/**/*.js", [
       //"lint",
       "babel"]);
-    gulp.watch("app/less/**/*.less", ["less"]);
+    gulp.watch("app/less/**/*.less", ["less:local"]);
   });
 
 gulp.task("size", () => {
   return gulp.src("dist/**/*").pipe($.size({ title: "build", gzip: true }));
 });
 
-gulp.task("less", function () {
-  gulp.src("app/less/**/*.less")
+gulp.task("less:local", function () {
+  gulp.src("app/less/*.less")
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest("app/styles"));
+});
+
+gulp.task("less:build", function () {
+  gulp.src("app/less/*.less")
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest("dist/styles"));
 });
 
 gulp.task("package", function () {
@@ -144,9 +153,11 @@ gulp.task("build", (cb) => {
     //"lint",
     "babel",
     "chromeManifest",
-    ["html",
+    [
+      "fonts:build",
+      "less:build",
+      "html",
       "images",
-      "less",
       "extras"],
     "size", cb);
 });

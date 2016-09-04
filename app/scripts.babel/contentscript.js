@@ -64,48 +64,79 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
 
   //clear all selected tabs
   _clearSelectedTabs();
-
-  const closeImage = jQuery(`<i title="Close Tab" data-tab="${newTabId}" class="jp-icon-close-tab" />`);
-  closeImage.click(function () {
-    const tabId = jQuery(this).attr("data-tab");
-    const tabsOpen = consoleContainer.find(".jp-tabs li");
-    if (tabsOpen.length > 0 && jQuery(this).parent().hasClass("jp-current")) {
-      $(tabsOpen[0]).click();
-    }
-    jQuery(this).parent().remove();
-    jQuery("#outer-" + tabId).remove();
-
-    _showNoTabs(consoleContainer);
-  });
+  const closeTabIcon = _setupCloseTabIcon(newTabId, consoleContainer);
   const tab = jQuery(`<li class="jp-tab-link jp-current" data-tab="${newTabId}"><span>${tabName}<span></li>`);
-  tab.append(closeImage);
+  tab.append(closeTabIcon);
   tabs.append(tab);
 
   const tabContent = jQuery(`<div class="jp-outer-content" id="outer-${newTabId}">`);
   const tabContentInner = jQuery(`<div  class="jp-tab-content jp-current" id="${newTabId}">`);
   const menuItemContainer = jQuery("<div></div>");
-  const saveMenuItem = jQuery("<i class='jp-menu-icon jp-icon-save' title='Save output' />");
+
+  const saveMenuItem = _setupSaveMenuItem(newTabId);
+  const copyMenuItem = _setupCopyMenuItem(newTabId);
+  const openMenuItem = _setupOpenMenuItem();
+  const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" frameborder="0" name="frame-${newTabId}" seamless src="${tabUrl}"></iframe>`);
+
+  menuItemContainer.append(saveMenuItem);
+  menuItemContainer.append(copyMenuItem);
+  menuItemContainer.append(openMenuItem);
+  tabContentInner.append(menuItemContainer);
+  tabContentInner.append(iFrameHtml);
+  tabContent.append(tabContentInner);
+
+  consoleContainer.append(tabContent);
+  _setTabClickEvents(consoleContainer);
+}
+
+function _setupCloseTabIcon(newTabId, consoleContainer) {
+  const closeImage = jQuery(`<i title="Close Tab" data-tab="${newTabId}" class="fa fa-close jp-icon-close-tab" />`);
+  closeImage.click(function () {
+    const tabId = jQuery(this).attr("data-tab");
+    jQuery(this).parent().remove();
+    jQuery("#outer-" + tabId).remove();
+
+    const tabsOpen = consoleContainer.find(".jp-tabs li");
+    if (tabsOpen.length > 0 && jQuery(this).parent().hasClass("jp-current")) {
+      $(tabsOpen[0]).click();
+    }
+
+    _showNoTabs(consoleContainer);
+  });
+  return closeImage;
+}
+function _setupSaveMenuItem(newTabId) {
+  const saveMenuItem = jQuery("<i class='fa fa-save jp-menu-icon jp-icon-save' title='Save output' />");
   saveMenuItem.click(function () {
-    const iframe = jQuery("iframe[data-tab='" + newTabId + "']");
     try {
-      const body = iframe.contents().find("body");
-      //TODO: filter down to just output area in jenkins page.. so dont get everything else
-      chrome.extension.sendMessage({
-        action: "saveHtml",
-        data: {
-          html: body.html(),
-          fileName: tabName
-        }
-      });
+      window.frames[`frame-${newTabId}`].focus();
+      window.frames[`frame-${newTabId}`].print();
     } catch (e) {
       toastr.error("Unable to save console output. Error: " + e.message);
     }
-
   });
-  const copyMenuItem = jQuery("<i class='jp-menu-icon jp-icon-copy' title='Copy to clipboard' />");
+  return saveMenuItem;
+}
+function _setupOpenMenuItem() {
+  const openMenuItem = jQuery("<i class='fa fa-share-square jp-menu-icon jp-icon-open' title='Open in new tab' />");
+  openMenuItem.click(function () {
+    try {
+      chrome.extension.sendMessage({
+        action: "openInNewTab",
+        data: tabUrl
+      });
+    } catch (e) {
+      toastr.error("Unable to open in new tab. Error: " + e.message);
+    }
+  });
+  return openMenuItem;
+}
+function _setupCopyMenuItem(newTabId) {
+  const copyMenuItem = jQuery("<i class='fa fa-clipboard jp-menu-icon jp-icon-copy' title='Copy to clipboard' />");
   copyMenuItem.click(function () {
     const iframe = jQuery("iframe[data-tab='" + newTabId + "']");
     try {
+      //TODO filter down to section of output only
       const body = iframe.contents().find("body");
       chrome.extension.sendMessage({
         action: "copyClipBoard",
@@ -119,29 +150,7 @@ function _renderTab(consoleContainer, tabUrl, tabName) {
       toastr.error("Unable to copy console output to clipboard. Error: " + e.message);
     }
   });
-  const openMenuItem = jQuery("<i class='jp-menu-icon jp-icon-open' title='Open in new tab' />");
-  openMenuItem.click(function () {
-    try {
-      chrome.extension.sendMessage({
-        action: "openInNewTab",
-        data: tabUrl
-      });
-    } catch (e) {
-      toastr.error("Unable to open in new tab. Error: " + e.message);
-    }
-  });
-
-  const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" frameborder="0" seamless src="${tabUrl}"></iframe>`);
-
-  menuItemContainer.append(saveMenuItem);
-  menuItemContainer.append(copyMenuItem);
-  menuItemContainer.append(openMenuItem);
-  tabContentInner.append(menuItemContainer);
-  tabContentInner.append(iFrameHtml);
-  tabContent.append(tabContentInner);
-
-  consoleContainer.append(tabContent);
-  _setTabClickEvents(consoleContainer);
+  return copyMenuItem;
 }
 
 function _setTabClickEvents(consoleContainer) {

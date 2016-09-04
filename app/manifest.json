@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "manifest_version": 2,
   "description": "Extension that add missing functionality to Jenkins",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuwaANqjwoXoJFaGC76qrv1y2rcIe/zMoONBVJ3O/QF3a5EHQ/x7bQgFqVMWJo/fg18r8ayKLCczIVJy0nThGZpVBqRUW8w2HqX89EXbKwnzN8p4MtEKPDOv24FRTuZaI3jkIN/Igkp9gaTYlzNzQtLSNbruyLjGS94wx6YSmrYFwEZJjGrj/Q6hgqPWxS5McaLIOlIws+wGm610YzBuvi5tQ9JPyTmGiEtdTvq3fiKQ12NXwdZeUK8D3XSBPYdT3RlY9oKTivf0rYwMgkiAX9U5nlfm/JQIVyt1v3y+YO11OpYen+VurVKsN0SF3Z6BsZRdsOwlmLOOldar6p1HkqQIDAQAB",
   "icons": {
     "16": "images/Jenkins_logo-16.png",
     "128": "images/Jenkins_logo-128.png"
@@ -11,7 +12,6 @@
   "background": {
     "scripts": [
       "scripts/jquery.min.js",
-      "scripts/jspdf.min.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]
@@ -20,8 +20,7 @@
     "images/*",
     "templates.html",
     "mock.html",
-    "styles/jpconsole.css",
-    "styles/mock.css"
+    "fonts/*"
   ],
   "permissions": [
     "tabs",
@@ -41,7 +40,7 @@
         "http://*/*",
         "https://*/*"
       ],
-      "css": [ "styles/jquery.ui.css", "styles/toastr.min.css", "styles/jpconsole.css", "styles/mock.css" ],
+      "css": [ "styles/jpconsole.css"],
       "js": [
         "scripts/jquery.min.js",
         "scripts/jquery.ui.resizable.min.js",
