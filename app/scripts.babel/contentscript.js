@@ -297,13 +297,15 @@ class JPView {
     });
     //bind to buttons
     htmldoc.find("#insertMockPendingBtn").click(function () {
-      console.log("insertMockPendingBtn");
+      const rows = self.$(".jp-mock-template .pane-content table tbody tr");
+      rows.eq(0).after("<tr><td>insertMockPendingBtn</td></tr>");
     });
     htmldoc.find("#convertMockPendingToInprogressBtn").click(function () {
       console.log("convertMockPendingToInprogressBtn");
     });
     htmldoc.find("#insertMockProgressBtn").click(function () {
-      console.log("insertMockProgressBtn");
+      const rows = self.$(".jp-mock-template .pane-content table tbody tr");
+      rows.eq(0).after("<tr><td>insertMockProgressBtn</td></tr>");
     });
     this.$("body").append(htmldoc);
   }
