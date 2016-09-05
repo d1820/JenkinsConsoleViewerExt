@@ -7,10 +7,22 @@
 </head>
 
 <body>
-  <h1>'Allo, 'Allo!</h1>
-  <button id="mockJenkins">Inject Mock jenkins Html</button>
-  <button id="consoleViewer">Show Console Viewer</button>
-  <button id="optionsView">Show Options</button>
+  <div id="main-menu" class="jp-popout">
+    <div class="menu-item" id="mockJenkins">
+      <i class="fa fa-share"></i><span class="menu-item-text">Inject Mock Jenkins Html</span>
+    </div>
+
+    <div class="menu-item" id="consoleViewer">
+      <i class="jp-console-icon"></i><span class="menu-item-text">Show Console Viewer</span>
+    </div>
+
+    <div class="menu-separator"></div>
+
+    <div class="menu-item" id="optionsView">
+      <i class="fa fa-cog"></i><span class="menu-item-text">Options</span>
+    </div>
+  </div>
+
   <script src="scripts/popup.js"></script>
 </body>
 
