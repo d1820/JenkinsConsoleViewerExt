@@ -3,6 +3,7 @@
 let _jpConsoleTemplate = null;
 let _jpConsoleOptions = {};
 let jenkinsObserver = null;
+let _extensionInfo = null;
 
 //keep these in sync with options.js
 const jpDefaultOptions = {
@@ -15,7 +16,12 @@ chrome.storage.sync.get(jpDefaultOptions, (options) => {
   _jpConsoleOptions = options;
 
   if (options.autoOpenConsole) {
-    _renderConsole(_jpConsoleOptions);
+    chrome.runtime.sendMessage({
+      action: "getExtensionInfo"
+    }, (extInfo) => {
+      _extensionInfo = extInfo.data;
+      _showConsoleAndLoadIcons(_isDevelopment());
+    });
   }
 });
 
@@ -30,17 +36,11 @@ chrome.storage.onChanged.addListener(function (changes) {
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  //console.log(sender.tab ?     "from a content script:" + sender.tab.url :    "from the extension");
+  _extensionInfo = (request.extInfo ? request.extInfo : _extensionInfo);
   switch (request.action) {
     case "showconsoleviewer":
       {
-        if (_hasJenkinsBuildLinks()) {
-          //we pass in so not to register multiple observers for same area
-          jenkinsObserver = _setupObserver(jenkinsObserver);
-          _injectConsoleIcons(_isDevelopment(request.extInfo), jenkinsObserver, _jpConsoleOptions);
-          _renderConsole(_jpConsoleOptions, jenkinsObserver).then(function () {
-            sendResponse({ status: "success" });
-          });
+        if (_showConsoleAndLoadIcons(_isDevelopment())) {
           break;
         }
         const err = _createError("failure:notSuportedPage", "Not a supported page for the Jenkins Console Viewer");
@@ -75,6 +75,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   return true;
 });
 
+function _showConsoleAndLoadIcons() {
+  if (_hasJenkinsBuildLinks(isDevelopment)) {
+    //we pass in so not to register multiple observers for same area
+    jenkinsObserver = _setupObserver(jenkinsObserver);
+    _injectConsoleIcons(isDevelopment, jenkinsObserver, _jpConsoleOptions);
+    _renderConsole(_jpConsoleOptions, jenkinsObserver).then(function () {
+      sendResponse({ status: "success" });
+    });
+    return true;
+  }
+  //console.log("Not a supported page for the Jenkins Console Viewer");
+  return false;
+}
+
 function _createError(errorId, error) {
   return {
     status: "failure",
@@ -83,8 +97,8 @@ function _createError(errorId, error) {
   };
 }
 
-function _isDevelopment(extInfo) {
-  return extInfo.installType === "development";
+function _isDevelopment() {
+  return _extensionInfo && _extensionInfo.installType === "development";
 }
 
 function _hasJenkinsBuildLinks() {

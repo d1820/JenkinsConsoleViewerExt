@@ -37,9 +37,14 @@ const methods = {
         }, sendResponse);
       });
     });
+  },
+
+  getExtensionInfo: (sendResponse) => {
+    chrome.management.getSelf(function (extInfo) {
+      sendResponse({ data: extInfo });
+    });
   }
 };
-
 
 chrome.runtime.onInstalled.addListener(details => {
   console.log("previousVersion", details);
