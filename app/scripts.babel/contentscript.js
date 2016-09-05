@@ -1,8 +1,8 @@
 /* eslint no-undef: 0 */
 
 let _jpConsoleTemplate = null;
-let _consoleIconsRendered = false;
-let _jpConsoleOptions;
+let _jpConsoleOptions = {};
+let jenkinsObserver = null;
 
 //keep these in sync with options.js
 const jpDefaultOptions = {
@@ -26,9 +26,8 @@ chrome.storage.onChanged.addListener(function (changes) {
     }
   }
   //console.log(_jpConsoleOptions);
-  _renderConsole(_jpConsoleOptions, true);
+  _renderConsole(_jpConsoleOptions, null, true);
 });
-
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   //console.log(sender.tab ?     "from a content script:" + sender.tab.url :    "from the extension");
@@ -36,8 +35,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     case "showconsoleviewer":
       {
         if (_hasJenkinsBuildLinks()) {
-          _injectConsoleIcons(_isDevelopment(request.extInfo));
-          _renderConsole(_jpConsoleOptions).then(function () {
+          //we pass in so not to register multiple observers for same area
+          jenkinsObserver = _setupObserver(jenkinsObserver);
+          _injectConsoleIcons(_isDevelopment(request.extInfo), jenkinsObserver, _jpConsoleOptions);
+          _renderConsole(_jpConsoleOptions, jenkinsObserver).then(function () {
             sendResponse({ status: "success" });
           });
           break;
@@ -52,6 +53,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       const htmldoc = jQuery(request.html);
       htmldoc.find(".build-name a").each(function () {
         $(this).prop("href", request.activeUrl);
+      });
+      //bind to buttons
+      htmldoc.find("#insertMockPendingBtn").click(function () {
+        console.log("insertMockPendingBtn");
+      });
+      htmldoc.find("#convertMockPendingToInprogressBtn").click(function () {
+        console.log("convertMockPendingToInprogressBtn");
+      });
+      htmldoc.find("#insertMockProgressBtn").click(function () {
+        console.log("insertMockProgressBtn");
       });
       jQuery("body").append(htmldoc);
       sendResponse({ status: "success" });
@@ -224,7 +235,7 @@ function _setTheme(consoleContainer, options) {
   consoleContainer.addClass(options.theme);
 }
 
-function _renderConsole(options, forceRedraw) {
+function _renderConsole(options, jenkinsJobWatcher, forceRedraw) {
   const defered = jQuery.Deferred();
 
   const consoleContainer = jQuery("body").find(".jp-console");
@@ -236,16 +247,18 @@ function _renderConsole(options, forceRedraw) {
       const newConsoleContainer = jQuery(containerHtml);
       _setTheme(newConsoleContainer, options);
       newConsoleContainer.hover(function () {
-        //hover in
         $(this).fadeTo("fast", 1);
       }, function () {
-        //hover out
         $(this).fadeTo("fast", options.transparency);
       });
 
       newConsoleContainer.find("#jp-closebutton").click(function () {
         jQuery("#jp-console").remove();
+        if (jenkinsJobWatcher) {
+          jenkinsJobWatcher.disconnect();
+        }
       });
+
       _setTabClickEvents(newConsoleContainer);
       newConsoleContainer.resizable({
         handles: "n, e, s, w",
@@ -278,14 +291,13 @@ function _checkIfAlreadyOpen(consoleContainer, tabText) {
   return false;
 }
 
-
-function _injectConsoleIcons(isDevelopment) {
-  if (_consoleIconsRendered) {
-    return;
-  }
+function _injectConsoleIcons(isDevelopment, jenkinsJobWatcher, options) {
   jQuery(".build-row-cell").each(function () {
+    const container = jQuery(this).find(".build-controls .build-badge");
+    if (container.find(".jp-console-icon").length > 0) {
+      return true;
+    }
     const htmlObj = jQuery("<div class='jp-console-icon'><i title='Console'/></div>");
-
     htmlObj.click(function () {
       const link = jQuery(this).closest(".build-row-cell").find(".build-name .build-link");
       if (link.length > 0) {
@@ -294,7 +306,7 @@ function _injectConsoleIcons(isDevelopment) {
 
         if (gotoLink) {
           const consoleLink = gotoLink + (isDevelopment ? "" : "console");
-          _renderConsole().then(function (consoleContainer) {
+          _renderConsole(options, jenkinsJobWatcher).then(function (consoleContainer) {
             const isOpen = _checkIfAlreadyOpen(consoleContainer, linkText);
             if (!isOpen) {
               _renderTab(consoleContainer, consoleLink, linkText);
@@ -305,9 +317,70 @@ function _injectConsoleIcons(isDevelopment) {
         toastr.warning("Build not started...");
       }
     });
-    const container = jQuery(this).find(".build-controls .build-badge");
     container.append(htmlObj);
-    _consoleIconsRendered = true;
   });
 }
 
+function _setupObserver(currentObserver) {
+  if (currentObserver) {
+    currentObserver.disconnect();
+  }
+  const MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+  let observer = null;
+  const container = $(".build-row:first").parent();
+  if (container.length > 0) {
+    const containerNode = container[0];
+
+    observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+
+        const entry = {
+          mutation: mutation,
+          el: mutation.target,
+          value: mutation.target.textContent,
+          oldValue: mutation.oldValue
+        };
+        console.log("Recording mutation:", entry);
+
+
+        // if (mutation.type === 'childList') {
+        //   var list_values = [].slice.call(list.children)
+        //     .map(function (node) { return node.innerHTML; })
+        //     .filter(function (s) {
+        //       if (s === '<br>') {
+        //         return false;
+        //       }
+        //       else {
+        //         return true;
+        //       }
+        //     });
+        //   console.log(list_values);
+        // }
+
+
+        // childList: *true if mutations to children are to be observed
+        // attributes: true if mutations to attributes are to be observed
+        // characterData: true if data is to be observed
+        // subtree: true if mutations to both the target and descendants are to be observed
+        // attributeOldValue: true if attributes is true & attribute value prior to mutation needs recording
+        // characterDataOldValue: true if characterData is true & data before mutations needs recording
+        // attributeFilter: an array of local attribute names if not all attribute mutations need recording
+
+      });
+
+    });
+
+    console.log("observer created");
+
+    observer.observe(containerNode, {
+      attributes: true,
+      childList: true,
+      characterData: true
+    });
+
+  }
+  return observer;
+
+
+
+}
