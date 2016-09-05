@@ -213,6 +213,7 @@ class JPController {
   }
 
   _setupObserver(currentObserver) {
+    const self = this;
     if (currentObserver) {
       currentObserver.disconnect();
     }
@@ -221,62 +222,36 @@ class JPController {
     const container = $(".build-row:first").parent();
     if (container.length > 0) {
       const containerNode = container[0];
-
+      let inUpdate = false;
       observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-
-          const entry = {
-            mutation: mutation,
-            el: mutation.target,
-            value: mutation.target.textContent,
-            oldValue: mutation.oldValue
-          };
-          console.log("Recording mutation:", entry);
-
-
-          // if (mutation.type === 'childList') {
-          //   var list_values = [].slice.call(list.children)
-          //     .map(function (node) { return node.innerHTML; })
-          //     .filter(function (s) {
-          //       if (s === '<br>') {
-          //         return false;
-          //       }
-          //       else {
-          //         return true;
-          //       }
-          //     });
-          //   console.log(list_values);
-          // }
-
-
-          // childList: *true if mutations to children are to be observed
-          // attributes: true if mutations to attributes are to be observed
-          // characterData: true if data is to be observed
-          // subtree: true if mutations to both the target and descendants are to be observed
-          // attributeOldValue: true if attributes is true & attribute value prior to mutation needs recording
-          // characterDataOldValue: true if characterData is true & data before mutations needs recording
-          // attributeFilter: an array of local attribute names if not all attribute mutations need recording
-
-        });
-
+        if (mutations && mutations.length > 0 && !inUpdate) {
+          //add new icons
+          const hasIconAdded = mutations.some(function (mutation) {
+            return mutation.addedNodes.length > 0 && mutation.addedNodes[0].className === "jp-console-icon";
+          });
+          inUpdate = true;
+          if (!hasIconAdded) {
+            self._injectConsoleIcons(self._isDevelopment(), self._jenkinsObserver, self._jpConsoleOptions);
+          }
+          inUpdate = false;
+        }
       });
-
-      console.log("observer created");
+      // childList: *true if mutations to children are to be observed
+      // attributes: true if mutations to attributes are to be observed
+      // characterData: true if data is to be observed
+      // subtree: true if mutations to both the target and descendants are to be observed
+      // attributeOldValue: true if attributes is true & attribute value prior to mutation needs recording
+      // characterDataOldValue: true if characterData is true & data before mutations needs recording
+      // attributeFilter: an array of local attribute names if not all attribute mutations need recording
 
       observer.observe(containerNode, {
-        attributes: true,
         childList: true,
-        characterData: true
+        subtree: true
       });
 
     }
     return observer;
-
-
-
   }
-
-
 }
 
 class JPView {
@@ -287,25 +262,47 @@ class JPView {
   createDeferred() {
     return this.$.Deferred();
   }
-
+  _overwriteUrl(container, currentUrl) {
+    const self = this;
+    container.find(".build-name a").each(function () {
+      self.$(this).prop("href", currentUrl);
+    });
+  }
   createAndInjectMockJenkinsHtml(html, currentUrl) {
     const self = this;
     const htmldoc = this.$(html);
 
-    htmldoc.find(".build-name a").each(function () {
-      self.$(this).prop("href", currentUrl);
-    });
+    this._overwriteUrl(htmldoc, currentUrl);
+    let currentPending = null;
     //bind to buttons
     htmldoc.find("#insertMockPendingBtn").click(function () {
       const rows = self.$(".jp-mock-template .pane-content table tbody tr");
-      rows.eq(0).after("<tr><td>insertMockPendingBtn</td></tr>");
+      const pendingHtml = self.$(self.$("#jenkins-plus-mock-pending").html());
+      currentPending = new Date().getUTCMilliseconds();
+      pendingHtml.prop("id", currentPending);
+      rows.eq(0).after(pendingHtml);
+      self._overwriteUrl(self.$(".jp-mock-template"), currentUrl);
+      $(this).attr("disabled", true);
     });
     htmldoc.find("#convertMockPendingToInprogressBtn").click(function () {
-      console.log("convertMockPendingToInprogressBtn");
+      if (currentPending) {
+        //const body = self.$(".jp-mock-template .pane-content table tbody");
+        const pending = self.$("#" + currentPending);
+        const progressHtml = self.$(self.$("#jenkins-plus-mock-inprogress").html());
+        progressHtml.prop("id", pending.prop("id"));
+        pending.replaceWith(progressHtml);
+        self._overwriteUrl(self.$(".jp-mock-template"), currentUrl);
+        self.$("#insertMockPendingBtn").attr("disabled", false);
+        currentPending = null;
+      }
     });
     htmldoc.find("#insertMockProgressBtn").click(function () {
       const rows = self.$(".jp-mock-template .pane-content table tbody tr");
-      rows.eq(0).after("<tr><td>insertMockProgressBtn</td></tr>");
+      const progressHtml = self.$(self.$("#jenkins-plus-mock-inprogress").html());
+      const currentProgress = new Date().getUTCMilliseconds();
+      progressHtml.prop("id", currentProgress);
+      rows.eq(0).after(progressHtml);
+      self._overwriteUrl(self.$(".jp-mock-template"), currentUrl);
     });
     this.$("body").append(htmldoc);
   }
