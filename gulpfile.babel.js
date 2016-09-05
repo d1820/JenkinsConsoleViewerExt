@@ -12,12 +12,11 @@ const $ = gulpLoadPlugins();
 gulp.task("extras", () => {
   return gulp.src([
     "app/*.*",
-    "app/_locales/**",
+    "app/fonts/**",
     "!app/scripts.babel",
     "!app/*.json",
     "!app/*.html"
-  ], {
-      base: "app",
+  ], { base: "app",
       dot: true
     }).pipe(gulp.dest("dist"));
 });
@@ -52,10 +51,10 @@ gulp.task("images", () => {
     .pipe(gulp.dest("dist/images"));
 });
 
-gulp.task("fonts:build", () => {
-  return gulp.src("app/fonts/**/*.{ttf,woff,eof,svg}")
-    .pipe(gulp.dest("dist/fonts"));
-});
+// gulp.task("fonts:build", () => {
+//   return gulp.src("app/fonts/**/*.{ttf,woff,eof,svg}")
+//     .pipe(gulp.dest("dist/fonts"));
+// });
 
 gulp.task("html", () => {
   return gulp.src("app/*.html")
@@ -73,7 +72,7 @@ gulp.task("chromeManifest", () => {
   return gulp.src("app/manifest.json")
     .pipe($.chromeManifest({
       buildnumber: true,
-      exclude:[
+      exclude: [
         "key"
       ],
       background: {
@@ -101,7 +100,7 @@ gulp.task("babel", () => {
 gulp.task("clean", del.bind(null, [".tmp", "dist"]));
 
 gulp.task("watch", [
-  //"lint", 
+  //"lint",
   "babel",
   "less:local",
   "html"], () => {
@@ -111,8 +110,7 @@ gulp.task("watch", [
       "app/*.html",
       "app/scripts/**/*.js",
       "app/images/**/*",
-      "app/styles/**/*",
-      "app/_locales/**/*.json"
+      "app/styles/**/*"
     ]).on("change", $.livereload.reload);
 
     gulp.watch("app/scripts.babel/**/*.js", [
@@ -144,7 +142,7 @@ gulp.task("less:build", function () {
 gulp.task("package", function () {
   const manifest = require("./dist/manifest.json");
   return gulp.src("dist/**")
-    .pipe($.zip("JenkinsConsoleViewerExt-" + manifest.version + ".zip"))
+    .pipe($.zip("JenkinsPlusExt-" + manifest.version + ".zip"))
     .pipe(gulp.dest("package"));
 });
 
@@ -154,7 +152,6 @@ gulp.task("build", (cb) => {
     "babel",
     "chromeManifest",
     [
-      "fonts:build",
       "less:build",
       "html",
       "images",
