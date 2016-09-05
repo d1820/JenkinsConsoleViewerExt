@@ -174,7 +174,7 @@ class JPController {
   _checkIfAlreadyOpen(consoleContainer, tabText) {
     const tabItems = this.view.getTabItems();
     for (let i = 0; i < tabItems.length; i++) {
-      const obj = jQuery(tabs[i]);
+      const obj = jQuery(tabItems[i]);
       if (obj.text() === tabText) {
         return true;
       }
@@ -446,7 +446,7 @@ class JPView {
       self.$(this).parent().remove();
       self.$("#outer-" + tabId).remove();
 
-      const tabsOpen = this.getTabItems();
+      const tabsOpen = self.getTabItems();
       if (tabsOpen.length > 0 && self.$(this).parent().hasClass("jp-current")) {
         self.$(tabsOpen[0]).click();
       }
