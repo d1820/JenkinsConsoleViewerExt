@@ -5,7 +5,6 @@ import del from "del";
 import runSequence from "run-sequence";
 import less from "gulp-less";
 import sourcemaps from "gulp-sourcemaps";
-//import {stream as wiredep} from 'wiredep';
 
 const $ = gulpLoadPlugins();
 
@@ -51,11 +50,6 @@ gulp.task("images", () => {
     .pipe(gulp.dest("dist/images"));
 });
 
-// gulp.task("fonts:build", () => {
-//   return gulp.src("app/fonts/**/*.{ttf,woff,eof,svg}")
-//     .pipe(gulp.dest("dist/fonts"));
-// });
-
 gulp.task("html", () => {
   return gulp.src("app/*.html")
     .pipe($.useref({ searchPath: [".tmp", "app", "."] }))
@@ -100,7 +94,7 @@ gulp.task("babel", () => {
 gulp.task("clean", del.bind(null, [".tmp", "dist"]));
 
 gulp.task("watch", [
-  //"lint",
+  "lint",
   "babel",
   "less:local",
   "html"], () => {
@@ -148,7 +142,7 @@ gulp.task("package", function () {
 
 gulp.task("build", (cb) => {
   runSequence(
-    //"lint",
+    "lint",
     "babel",
     "chromeManifest",
     [
