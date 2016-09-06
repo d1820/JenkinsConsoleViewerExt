@@ -65,6 +65,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 chrome.browserAction.setBadgeText({ text: "\Plus" });
+chrome.browserAction.setBadgeBackgroundColor({ color: "#D32F2F" });
 
 
 function getMockHtml() {
