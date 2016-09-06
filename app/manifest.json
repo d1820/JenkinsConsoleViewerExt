@@ -1,8 +1,8 @@
 {
   "name": "Jenkins Plus",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "manifest_version": 2,
-  "description": "Extension that add missing functionality to Jenkins",
+  "description": "Extension that adds missing functionality to Jenkins",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuwaANqjwoXoJFaGC76qrv1y2rcIe/zMoONBVJ3O/QF3a5EHQ/x7bQgFqVMWJo/fg18r8ayKLCczIVJy0nThGZpVBqRUW8w2HqX89EXbKwnzN8p4MtEKPDOv24FRTuZaI3jkIN/Igkp9gaTYlzNzQtLSNbruyLjGS94wx6YSmrYFwEZJjGrj/Q6hgqPWxS5McaLIOlIws+wGm610YzBuvi5tQ9JPyTmGiEtdTvq3fiKQ12NXwdZeUK8D3XSBPYdT3RlY9oKTivf0rYwMgkiAX9U5nlfm/JQIVyt1v3y+YO11OpYen+VurVKsN0SF3Z6BsZRdsOwlmLOOldar6p1HkqQIDAQAB",
   "icons": {
     "16": "images/Jenkins_logo-16.png",
