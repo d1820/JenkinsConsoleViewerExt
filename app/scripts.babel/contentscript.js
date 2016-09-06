@@ -26,7 +26,7 @@ class JPController {
           action: "getExtensionInfo"
         }, (extInfo) => {
           self.extensionInfo = extInfo.data;
-          self._showConsoleAndLoadIcons(self._isDevelopment());
+          self._showConsoleAndLoadIcons.call(self, self._isDevelopment());
         });
       }
     });
@@ -69,7 +69,7 @@ class JPController {
   }
 
   _showConsoleAndLoadIcons(isDevelopment, sendResponse) {
-    if (this.view.hasJenkinsBuildLinks(isDevelopment)) {
+    if (this.view.hasJenkinsBuildLinks()) {
       //we pass in so not to register multiple observers for same area
       this._jenkinsObserver = this._setupObserver(this._jenkinsObserver);
       this._injectConsoleIcons(isDevelopment, this._jenkinsObserver, this._jpConsoleOptions);
