@@ -26,7 +26,7 @@ class JPController {
           action: "getExtensionInfo"
         }, (extInfo) => {
           self.extensionInfo = extInfo.data;
-          self._showConsoleAndLoadIcons.call(self, self._isDevelopment());
+          self._showConsoleAndLoadIcons.call(self, self._isDevelopment(),()=>{});
         });
       }
     });
@@ -51,17 +51,26 @@ class JPController {
             }
             const err = self._createError("failure:notSuportedPage", "Not a supported page for the Jenkins Console Viewer");
             self._messagingService.warning(err.error);
-            sendResponse(err);
+            if (sendResponse)
+            {
+              sendResponse(err);
+            }
             break;
           }
 
         case "rendermock": {
           self.view.createAndInjectMockJenkinsHtml(request.html, request.activeUrl);
-          sendResponse({ status: "success" });
+          if (sendResponse)
+          {
+            sendResponse({ status: "success" });
+          }
           break;
         }
         default:
-          sendResponse(self._createError("failure:invalidAction", "Unknown action recieved in content script. Action: " + request.action));
+          if (sendResponse)
+          {
+            sendResponse(self._createError("failure:invalidAction", "Unknown action recieved in content script. Action: " + request.action));
+          }
           break;
       }
       return true;
@@ -74,7 +83,9 @@ class JPController {
       this._jenkinsObserver = this._setupObserver(this._jenkinsObserver);
       this._injectConsoleIcons(isDevelopment, this._jenkinsObserver, this._jpConsoleOptions);
       this._renderConsole(this._jpConsoleOptions, this._jenkinsObserver).then(function () {
-        sendResponse({ status: "success" });
+        if (sendResponse) {
+          sendResponse({ status: "success" });
+        }
       });
       return true;
     }
@@ -339,6 +350,7 @@ class JPView {
   clearSelectedTabs() {
     this.$("ul.jp-tabs li").removeClass("jp-current");
     this.$(".jp-tab-content").removeClass("jp-current");
+    this.$(".jp-tab-content").parent().removeClass("jp-current-outer");
   }
 
   getConsoleContainer() {
@@ -387,7 +399,7 @@ class JPView {
       const tabId = self.$(this).attr("data-tab");
       self.clearSelectedTabs();
       self.$(this).addClass("jp-current");
-      self.$("#" + tabId).addClass("jp-current");
+      self.$("#" + tabId).addClass("jp-current").parent().addClass("jp-current-outer");
     });
   }
 
@@ -398,7 +410,7 @@ class JPView {
     const tabContent = jQuery(`<div class="jp-outer-content" id="outer-${newTabId}">`);
     const tabContentInner = jQuery(`<div  class="jp-tab-content jp-current" id="${newTabId}">`);
     const menuItemContainer = jQuery("<div></div>");
-    const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" frameborder="0" name="frame-${newTabId}" seamless src="${tabUrl}"></iframe>`);
+    const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" scrolling="yes" frameborder="0" name="frame-${newTabId}" src="${tabUrl}"></iframe>`);
 
     tab.append(closeTabIcon);
     tabs.append(tab);
