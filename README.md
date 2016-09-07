@@ -1,5 +1,5 @@
 # Jenkins Plus Chrome Extension
-Additional tools to help maximize your effeciency in Jenkins.
+Additional tools to help maximize your efficiency in Jenkins.
 
 ## Available tools
 * Console Viewer - this allows viewing of the console output from the build page. 
