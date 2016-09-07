@@ -91,6 +91,14 @@ gulp.task("babel", () => {
     .pipe(gulp.dest("app/scripts"));
 });
 
+gulp.task("babel:build", () => {
+  return gulp.src("app/scripts.babel/**/*.js")
+    .pipe($.babel({
+      presets: ["es2015"]
+    }))
+    .pipe(gulp.dest("dist/scripts"));
+});
+
 gulp.task("clean", del.bind(null, [".tmp", "dist"]));
 
 gulp.task("watch", [
@@ -108,7 +116,7 @@ gulp.task("watch", [
     ]).on("change", $.livereload.reload);
 
     gulp.watch("app/scripts.babel/**/*.js", [
-      //"lint",
+      "lint",
       "babel"]);
     gulp.watch("app/less/**/*.less", ["less:local"]);
   });
@@ -143,7 +151,7 @@ gulp.task("package", function () {
 gulp.task("build", (cb) => {
   runSequence(
     "lint",
-    "babel",
+    "babel:build",
     "chromeManifest",
     [
       "less:build",

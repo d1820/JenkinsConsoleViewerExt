@@ -489,7 +489,6 @@ class JPView {
     copyMenuItem.click(function () {
       const iframe = self.$("iframe[data-tab='" + newTabId + "']");
       try {
-        //TODO filter down to section of output only
         const body = iframe.contents().find("#main-panel");
         if (onClickCallback) {
           onClickCallback(body.text());
