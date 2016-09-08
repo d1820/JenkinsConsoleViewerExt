@@ -26,7 +26,7 @@ class JPController {
           action: "getExtensionInfo"
         }, (extInfo) => {
           self.extensionInfo = extInfo.data;
-          self._showConsoleAndLoadIcons.call(self, self._isDevelopment(),()=>{});
+          self._showConsoleAndLoadIcons.call(self, self._isDevelopment(), () => { });
         });
       }
     });
@@ -38,7 +38,7 @@ class JPController {
         }
       }
       //console.log(self._jpConsoleOptions);
-      self._renderConsole(self._jpConsoleOptions, null, true);
+      self._showConsoleAndLoadIcons(self._isDevelopment(), () => { }, true);
     });
 
     this.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -51,8 +51,7 @@ class JPController {
             }
             const err = self._createError("failure:notSuportedPage", "Not a supported page for the Jenkins Console Viewer");
             self._messagingService.warning(err.error);
-            if (sendResponse)
-            {
+            if (sendResponse) {
               sendResponse(err);
             }
             break;
@@ -60,15 +59,13 @@ class JPController {
 
         case "rendermock": {
           self.view.createAndInjectMockJenkinsHtml(request.html, request.activeUrl);
-          if (sendResponse)
-          {
+          if (sendResponse) {
             sendResponse({ status: "success" });
           }
           break;
         }
         default:
-          if (sendResponse)
-          {
+          if (sendResponse) {
             sendResponse(self._createError("failure:invalidAction", "Unknown action recieved in content script. Action: " + request.action));
           }
           break;
@@ -77,12 +74,12 @@ class JPController {
     });
   }
 
-  _showConsoleAndLoadIcons(isDevelopment, sendResponse) {
+  _showConsoleAndLoadIcons(isDevelopment, sendResponse, forceRenderRedraw) {
     if (this.view.hasJenkinsBuildLinks()) {
       //we pass in so not to register multiple observers for same area
       this._jenkinsObserver = this._setupObserver(this._jenkinsObserver);
       this._injectConsoleIcons(isDevelopment, this._jenkinsObserver, this._jpConsoleOptions);
-      this._renderConsole(this._jpConsoleOptions, this._jenkinsObserver).then(function () {
+      this._renderConsole(this._jpConsoleOptions, this._jenkinsObserver, forceRenderRedraw).then(function () {
         if (sendResponse) {
           sendResponse({ status: "success" });
         }
@@ -157,10 +154,11 @@ class JPController {
 
     if (consoleContainer.length === 0 || forceRedraw) {
       this._templateService.getTemplate("/templates.html").then(function (templateHtml) {
+        self.view.appendToJpTemplates.call(self.view, templateHtml);
         if (forceRedraw) {
           self.view.removeConsole();
         }
-        self.view.setConsoleContainer(templateHtml);
+        self.view.setConsoleContainer();
         const newConsoleContainer = self.view.getConsoleContainer();
         self._setTheme(newConsoleContainer, options);
         self.view.setupConsoleContainerOnHover(options.transparency);
@@ -270,6 +268,17 @@ class JPView {
     this.$ = jqueryyRef;
   }
 
+  appendToJpTemplates(html) {
+    const body = this.$("body");
+    if (body.length > 0 && body[0].nodeName !== "FRAMESET") {
+      let jpTemplateContainer = this.$(".jpTemplateContainer");
+      if (jpTemplateContainer.length === 0) {
+        jpTemplateContainer = this.$("<div class='.jpTemplateContainer'></div>");
+        jpTemplateContainer.append(html);
+        body.append(jpTemplateContainer);
+      }
+    }
+  }
   createDeferred() {
     return this.$.Deferred();
   }
@@ -356,9 +365,8 @@ class JPView {
   getConsoleContainer() {
     return jQuery("body").find(".jp-console");
   }
-  setConsoleContainer(templateHtml) {
-    this.$("body").append(templateHtml);
-    const containerHtml = jQuery("#jenkins-plus-tab-template").html();
+  setConsoleContainer() {
+    const containerHtml = self.$("#jenkins-plus-tab-template").html();
     this.$("body").append(this.$(containerHtml));
   }
 
@@ -375,9 +383,16 @@ class JPView {
   setupConsoleContainerAsResizable() {
     const consoleContainer = this.getConsoleContainer();
     consoleContainer.resizable({
-      handles: "n, e, s, w",
+      handles: "all",
       minHeight: 270,
-      minWidth: 700
+      minWidth: 700,
+      containment: "document",
+      stop: function () {
+        $(this).attr("style", function (i, style) {
+          const newStyle = style.replace(/left[^;]+;?/g, "");
+          return newStyle.replace(/top[^;]+;?/g, "");
+        });
+      }
     });
   }
 
@@ -410,7 +425,7 @@ class JPView {
     const tabContent = jQuery(`<div class="jp-outer-content" id="outer-${newTabId}">`);
     const tabContentInner = jQuery(`<div  class="jp-tab-content jp-current" id="${newTabId}">`);
     const menuItemContainer = jQuery("<div></div>");
-    const iFrameHtml = jQuery(`<iframe width="100%" data-tab="${newTabId}" height="100%" scrolling="yes" frameborder="0" name="frame-${newTabId}" src="${tabUrl}"></iframe>`);
+    const iFrameHtml = jQuery(`<div class="jp-iframe-container"><iframe width="100%" data-tab="${newTabId}" height="100%" scrolling="yes" frameborder="0" name="frame-${newTabId}" src="${tabUrl}"></iframe></div>`);
 
     tab.append(closeTabIcon);
     tabs.append(tab);
@@ -517,18 +532,99 @@ class JPView {
 }
 
 class MessagingService {
-  constructor(toastrRef) {
-    this.toastr = toastrRef;
+  constructor(jquery, templateService) {
+    this._templateService = templateService;
+    this.$ = jquery;
+    this.ToastrPosition = {
+      TopRight: 1,
+      BottomRight: 2,
+      BottomLeft: 3,
+      TopLeft: 4,
+      TopCenter: 5,
+      BottomCenter: 6
+    };
+    this.ToastrType = {
+      Success: 1,
+      Info: 2,
+      Warning: 3,
+      Error: 4
+    };
+    this._toastContainer;
+    this._useAlerts = false;
+
   }
-  warning(message) {
-    toastr.warning(message);
+
+  initialize() {
+    this._toastContainer = this.$("<div class='jp-toastr'><div id='jp-toast-container'></div>");
+    const body = this.$("body");
+    if (body.length > 0) {
+      body.append(this._toastContainer);
+    } else {
+      this._useAlerts = true;
+    }
   }
+
+  lookupTypeClass(toastrType) {
+    switch (toastrType) {
+      case this.ToastrType.Success:
+        return "toast-success";
+      case this.ToastrType.Info:
+        return "toast-info";
+      case this.ToastrType.Warning:
+        return "toast-warning";
+      case this.ToastrType.Error:
+        return "toast-error";
+      default:
+        return "";
+    }
+  }
+
+  setTimer(id, timeout) {
+    const self = this;
+    return setTimeout(() => {
+      self.$("#" + id).remove();
+    }, timeout);
+  }
+  addToast(toast) {
+
+    const self = this;
+    if (self._useAlerts) {
+      alert(toast.message);
+      return;
+    }
+    const template = "<div class='toast toast-top-right' style='display: block;'><div class='toast-progress'></div><div class='toast-message'></div></div>";
+    const toastr = self.$(template);
+    const id = Math.random().toString(36).substr(2, 9);
+    toastr.addClass(self.lookupTypeClass(toast.type));
+    toastr.prop("id", id);
+    this._toastContainer.find("#jp-toast-container").append(toastr);
+    let cancelTimer = this.setTimer(id, toast.timeout);
+    self.$("#" + id + " .toast-message").text(toast.message).hover(() => {
+      clearTimeout(cancelTimer);
+    }, () => {
+      cancelTimer = self.setTimer(id, toast.timeout);
+    });
+
+  }
+
   error(message) {
-    toastr.error(message);
+    const toast = { type: this.ToastrType.Error, timeout: 7000, message: message };
+    this.addToast(toast);
+
   }
   info(message) {
-    toastr.info(message);
+    const toast = { type: this.ToastrType.Info, timeout: 5000, message: message };
+    this.addToast(toast);
   }
+  success(message) {
+    const toast = { type: this.ToastrType.Success, timeout: 5000, message: message };
+    this.addToast(toast);
+  }
+  warning(message) {
+    const toast = { type: this.ToastrType.Warning, timeout: 5000, message: message };
+    this.addToast(toast);
+  }
+
 }
 
 class TemplateService {
@@ -561,8 +657,9 @@ class TemplateService {
 }
 
 const _view = new JPView(jQuery);
-const _messagingService = new MessagingService(toastr);
 const _templateService = new TemplateService(jQuery, chrome.runtime);
+const _messagingService = new MessagingService(jQuery, _templateService);
 const _controller = new JPController(_view, chrome.storage, chrome.runtime, _templateService, _messagingService);
 
+_messagingService.initialize();
 _controller.initalize();

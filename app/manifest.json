@@ -1,6 +1,6 @@
 {
     "name": "Jenkins Plus",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "manifest_version": 2,
     "description": "Extension that adds missing functionality to Jenkins",
     "key": "",
@@ -42,7 +42,6 @@
         "js": [
             "scripts/jquery.min.js",
             "scripts/jquery.ui.resizable.min.js",
-            "scripts/toastr.min.js",
             "scripts/contentscript.js"
         ],
         "run_at": "document_end"

@@ -5,33 +5,23 @@
   <title>Jenkins Plus Settings</title>
   <link href="styles/options.css" rel="stylesheet">
 </head>
-<!-- TODO format this better -->
-
 <body>
-
-
-
-
-  <div class="jp-console-options">
-
+  <div class="jp-console-options jp-bootstrap">
     <div class="panel panel-primary jp-console-settings-container">
       <div class="panel-heading">
         <h2>Jenkins Plus Settings</h2>
       </div>
       <div class="panel-body">
-
         <div class="message-container">
           <div class="label label-success" id="status" style="display:none;"></div>
         </div>
-
         <div class="form-group">
           <label for="exampleSelect1">Select theme</label>
           <select class="form-control form-control-large" id="theme">
-            <option value="jp-theme-dark">Dark</option>
-            <option value="jp-theme-light">Light</option>
-        </select>
+              <option value="jp-theme-dark">Dark</option>
+              <option value="jp-theme-light">Light</option>
+          </select>
         </div>
-
         <div class="form-group">
           <div class="form-check">
             <label class="switch-label"> Open console viewer on page load</label>
@@ -41,23 +31,16 @@
         </label>
           </div>
         </div>
-
         <div class="form-group range-slider">
           <label for="transparency">Set Transparency level of console</label><label class="range-slider-value" id="transparencyValue"></label>
           <input type="range" id="transparency" value="95" max="100" min="50" step="5">
         </div>
-
         <div class="button-container">
           <button id="save" class="btn btn-primary">Save</button>
         </div>
       </div>
     </div>
-
-
-
   </div>
-
   <script src="scripts/options.js"></script>
 </body>
-
 </html>
