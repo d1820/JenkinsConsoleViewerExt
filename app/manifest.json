@@ -3,7 +3,7 @@
     "version": "1.0.7",
     "manifest_version": 2,
     "description": "Extension that adds missing functionality to Jenkins",
-    "key": "",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA53FtF5tfCMBaJJhSigBLHRV8i6m3Gb4FHaQrvSRV5zctr7oycuep5kK1U4nctH60Cw5xj8FeVbellf1dL8wSaazSXldRUbrNHDhWrw1WWMR2xY8PDsw/9ryQoRdR+KfLkvrwNZRloYG+42AiBJNTNK18BG2mqw4Al9BAWfih+ehvmOepRkJOR9MD1ZkSEVBtu6j6LXwAhaJHc8eF9zvZYGuOT/3ZZYeGk3blcw9EtBJlANkEkS8T+4DkEWbXdg9cWU8yiPeXSoJoalBeXgwP09fxDNQxYAV/xkO1bAvbLPKxv0XyOSylXDDc6FqelRL0gbfmrSEIXyZzZRE0onvBEQIDAQAB",
     "icons": {
         "16": "images/Jenkins_logo-16.png",
         "128": "images/Jenkins_logo-128.png"

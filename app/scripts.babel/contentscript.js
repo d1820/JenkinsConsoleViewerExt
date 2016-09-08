@@ -13,13 +13,18 @@ class JPController {
     this.jpDefaultOptions = {
       transparency: 0.9,
       theme: "jp-theme-dark",
-      autoOpenConsole: false
+      autoOpenConsole: false,
+      preserveConsoleSize: false
+    };
+    this.jpSizeOptions = {
+      width: 0,
+      height: 0
     };
   }
 
   initalize() {
     const self = this;
-    this.storage.sync.get(this.jpDefaultOptions, (options) => {
+    this.storage.local.get(this.jpDefaultOptions, (options) => {
       self._jpConsoleOptions = options;
       if (options.autoOpenConsole) {
         self.runtime.sendMessage({
@@ -168,9 +173,17 @@ class JPController {
           }
         });
         self.view.setTabClickEvents();
-        self.view.setupConsoleContainerAsResizable();
+        self.view.setupConsoleContainerAsResizable(self._jpConsoleOptions.preserveConsoleSize, (newSize) => {
+          self.jpSizeOptions = newSize;
+        });
         self.view.showNoTabsMessage();
-        defered.resolve(newConsoleContainer);
+        chrome.storage.local.get(self.jpSizeOptions, () => {
+          if (!chrome.runtime.lastError) {
+            newConsoleContainer.width(self.jpSizeOptions.width).height(self.jpSizeOptions.height);
+          }
+          defered.resolve(newConsoleContainer);
+        });
+        //defered.resolve(newConsoleContainer);
       }).fail(function () {
         defered.reject();
       });
@@ -380,14 +393,22 @@ class JPView {
     });
   }
 
-  setupConsoleContainerAsResizable() {
+  setupConsoleContainerAsResizable(preserveConsoleSize, sizeChangeCallback) {
     const consoleContainer = this.getConsoleContainer();
     consoleContainer.resizable({
       handles: "all",
       minHeight: 270,
       minWidth: 700,
       containment: "document",
-      stop: function () {
+      stop: function (ev, ui) {
+        //save to storage
+        if (preserveConsoleSize) {
+          chrome.storage.local.set(ui.size, () => { });
+          if (sizeChangeCallback) {
+            sizeChangeCallback(ui);
+          }
+        }
+
         $(this).attr("style", function (i, style) {
           const newStyle = style.replace(/left[^;]+;?/g, "");
           return newStyle.replace(/top[^;]+;?/g, "");
