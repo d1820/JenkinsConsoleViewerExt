@@ -37,13 +37,17 @@ class JPController {
     });
 
     this.storage.onChanged.addListener(function (changes) {
+      let hasOptionsChange = false;
       for (const k in changes) {
         if (self._jpConsoleOptions.hasOwnProperty(k)) {
           self._jpConsoleOptions[k] = changes[k].newValue;
+          hasOptionsChange = true;
         }
       }
       //console.log(self._jpConsoleOptions);
-      self._showConsoleAndLoadIcons(self._isDevelopment(), () => { }, true);
+      if (hasOptionsChange) {
+        self._showConsoleAndLoadIcons(self._isDevelopment(), () => { }, true);
+      }
     });
 
     this.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -163,27 +167,28 @@ class JPController {
         if (forceRedraw) {
           self.view.removeConsole();
         }
-        self.view.setConsoleContainer();
-        const newConsoleContainer = self.view.getConsoleContainer();
-        self._setTheme(newConsoleContainer, options);
-        self.view.setupConsoleContainerOnHover(options.transparency);
-        self.view.setupConsoleContainerOnClose(() => {
-          if (jenkinsJobWatcher) {
-            jenkinsJobWatcher.disconnect();
-          }
-        });
-        self.view.setTabClickEvents();
-        self.view.setupConsoleContainerAsResizable(self._jpConsoleOptions.preserveConsoleSize, (newSize) => {
-          self.jpSizeOptions = newSize;
-        });
-        self.view.showNoTabsMessage();
-        chrome.storage.local.get(self.jpSizeOptions, () => {
+        chrome.storage.local.get(self.jpSizeOptions, (sizeOptions) => {
           if (!chrome.runtime.lastError) {
-            newConsoleContainer.width(self.jpSizeOptions.width).height(self.jpSizeOptions.height);
+            self.jpSizeOptions = sizeOptions;
+            self.view.setConsoleContainer(sizeOptions.width, sizeOptions.height);
+          } else {
+            self.view.setConsoleContainer(self.jpSizeOptions.width, self.jpSizeOptions.height);
           }
+          const newConsoleContainer = self.view.getConsoleContainer();
+          self._setTheme(newConsoleContainer, options);
+          self.view.setupConsoleContainerOnHover(options.transparency);
+          self.view.setupConsoleContainerOnClose(() => {
+            if (jenkinsJobWatcher) {
+              jenkinsJobWatcher.disconnect();
+            }
+          });
+          self.view.setTabClickEvents();
+          self.view.setupConsoleContainerAsResizable(self._jpConsoleOptions.preserveConsoleSize, (newSize) => {
+            self.jpSizeOptions = newSize;
+          });
+          self.view.showNoTabsMessage();
           defered.resolve(newConsoleContainer);
         });
-        //defered.resolve(newConsoleContainer);
       }).fail(function () {
         defered.reject();
       });
@@ -378,9 +383,13 @@ class JPView {
   getConsoleContainer() {
     return jQuery("body").find(".jp-console");
   }
-  setConsoleContainer() {
+  setConsoleContainer(width, height) {
     const containerHtml = self.$("#jenkins-plus-tab-template").html();
-    this.$("body").append(this.$(containerHtml));
+    const container = this.$(containerHtml);
+    if (width > 0 && height > 0) {
+      container.width(width).height(height);
+    }
+    this.$("body").append(container);
   }
 
   setupConsoleContainerOnHover(transparency) {
@@ -404,8 +413,8 @@ class JPView {
         //save to storage
         if (preserveConsoleSize) {
           chrome.storage.local.set(ui.size, () => { });
-          if (sizeChangeCallback) {
-            sizeChangeCallback(ui);
+          if (sizeChangeCallback && !chrome.runtime.lastError) {
+            sizeChangeCallback(ui.size);
           }
         }
 
@@ -442,7 +451,7 @@ class JPView {
   createTab(newTabId, tabName, tabUrl, closeTabIcon, menuItems) {
     const consoleContainer = this.getConsoleContainer();
     const tabs = consoleContainer.find(".jp-tabs");
-    const tab = jQuery(`<li class="jp-tab-link jp-current" data-tab="${newTabId}"><span><b>${tabName}</b><span></li>`);
+    const tab = jQuery(`<li class="jp-tab-link jp-current" data-tab="${newTabId}"><span>${tabName}<span></li>`);
     const tabContent = jQuery(`<div class="jp-outer-content" id="outer-${newTabId}">`);
     const tabContentInner = jQuery(`<div  class="jp-tab-content jp-current" id="${newTabId}">`);
     const menuItemContainer = jQuery("<div></div>");
