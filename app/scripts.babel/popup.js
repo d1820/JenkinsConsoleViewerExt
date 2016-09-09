@@ -15,7 +15,7 @@ chrome.management.getSelf(function (extInfo) {
     document.getElementById("mockJenkins").addEventListener("click", function () {
       chrome.runtime.sendMessage({
         action: "renderMock"
-      }, ()=>{});
+      }, () => { });
     });
   } else {
     document.getElementById("mockJenkins").remove();
@@ -28,6 +28,14 @@ chrome.management.getSelf(function (extInfo) {
       window.open(chrome.runtime.getURL("opions.html"));
     }
   });
+
+  document.getElementById("bugFound").addEventListener("click", function () {
+    chrome.runtime.sendMessage({
+      action: "openInNewTab",
+      data: { url: "https://github.com/d1820/JenkinsPlusExt/issues" }
+    });
+  });
+
 });
 
 Element.prototype.remove = function () {
