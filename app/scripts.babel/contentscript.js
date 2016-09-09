@@ -613,6 +613,9 @@ class MessagingService {
     const self = this;
     return setTimeout(() => {
       self.$("#" + id).remove();
+      if (self._toastContainer.find("#jp-toast-container .toast").length === 0) {
+        self._toastContainer.hide();
+      }
     }, timeout);
   }
   addToast(toast) {
@@ -629,6 +632,7 @@ class MessagingService {
     toastr.prop("id", id);
     this._toastContainer.find("#jp-toast-container").append(toastr);
     let cancelTimer = this.setTimer(id, toast.timeout);
+    self._toastContainer.show();
     self.$("#" + id + " .toast-message").text(toast.message).hover(() => {
       clearTimeout(cancelTimer);
     }, () => {
