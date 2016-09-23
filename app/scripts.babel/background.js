@@ -1,5 +1,3 @@
-
-
 const methods = {
   openInNewTab: (data, sendResponse) => {
     chrome.tabs.create({ url: data.url });
